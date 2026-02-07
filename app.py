@@ -477,7 +477,21 @@ def run_research(topic, log_container, image_data=None, research_mode="Deep Stra
                 memory=False 
             )
 
-        return crew.kickoff()
+        try:
+            print("\n🚀 [EXECUTION] Kicking off CrewAI...")
+            result = crew.kickoff()
+            print("\n✅ [MISSION COMPLETE] Research Finished.")
+            
+            # 2026 CrewAI Update: Handle CrewOutput object
+            if hasattr(result, 'raw'):
+                return result.raw
+            return str(result)
+            
+        except Exception as e:
+            import traceback
+            error_msg = f"❌ [CRITICAL ERROR] Research Failed: {str(e)}\n\n{traceback.format_exc()}"
+            print(error_msg)
+            return error_msg
 
 # Sidebar: System Guide
 with st.sidebar:
