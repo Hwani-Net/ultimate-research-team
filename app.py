@@ -1007,13 +1007,25 @@ with col_right:
             
             st.balloons()
             
-            # Sound Effect Trigger
+            # Sound Effect Trigger (Enhanced with JS for reliability)
             if enable_sound:
-                st.markdown("""
-                    <audio autoplay>
-                        <source src="https://cdn.pixabay.com/audio/2022/10/16/audio_2e259e8306.mp3" type="audio/mpeg">
+                import streamlit.components.v1 as components
+                audio_url = "https://cdn.pixabay.com/audio/2022/10/16/audio_2e259e8306.mp3"
+                components.html(f"""
+                    <audio id="success-sound" style="display:none;" preload="auto">
+                        <source src="{audio_url}" type="audio/mpeg">
                     </audio>
-                """, unsafe_allow_html=True)
+                    <script>
+                        setTimeout(function() {{
+                            var audio = document.getElementById("success-sound");
+                            if (audio) {{
+                                audio.play().catch(function(error) {{
+                                    console.log("Autoplay blocked or failed:", error);
+                                }});
+                            }}
+                        }}, 500);
+                    </script>
+                """, height=0)
     
     
     if 'result' in st.session_state and st.session_state['result']:
