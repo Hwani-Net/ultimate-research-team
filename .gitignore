@@ -1,0 +1,14 @@
+.env
+__pycache__/
+*.pyc
+.streamlit/
+_backup_*.py
+*.png
+*.md
+!README.md
+!USAGE_GUIDE.md
+!DEPLOY_README.md
+!ANTIGRAVITY_MASTER_MANUAL.md
+!작업.md
+!requirements.txt
+!.github/
