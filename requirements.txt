@@ -3,3 +3,6 @@ crewai
 crewai-tools
 python-dotenv
 langchain-google-genai
+tavily-python
+pydantic
+litellm
