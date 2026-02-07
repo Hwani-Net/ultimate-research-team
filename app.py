@@ -1,5 +1,12 @@
 import streamlit as st
 import os
+
+# --- Streamlit Cloud / Multi-threaded Compatibility Patch ---
+# Disable CrewAI telemetry which causes signal handler errors in threads
+os.environ["CREWAI_DISABLE_TELEMETRY"] = "1"
+# Bypass LiteLLM signal handler issues in non-main threads
+os.environ["LITELLM_MODE"] = "PRODUCTION"
+
 import sys
 import contextlib
 import io
