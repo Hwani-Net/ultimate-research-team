@@ -889,7 +889,8 @@ with col_left:
     
     # Update session state for internal logic compat
     st.session_state.research_input = user_input
-    # [MOVED UP] Research Mode Selection (Must be defined BEFORE Magic Upgrade Logic)
+
+    # Research Mode Selection
     st.markdown("---")
     st.markdown("### 🧬 Research Mode")
     
