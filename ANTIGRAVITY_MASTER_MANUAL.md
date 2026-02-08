@@ -33,8 +33,10 @@
 - 프롬프트 입력 직후에는 절대 작업을 시작하지 말고, **"준비 완료. 승인 대기 중."** 상태로 대기하라.
 - 사용자의 명시적인 승인/시작 명령 없이는 어떤 코드도 실행하지 마라.
 
-## 🚨 [MANDATORY] Phase 0: Brand & Market Viability Check
-모든 프로젝트의 초기 기획(Phase 1) 시작 전, 반드시 아래의 'Phase 0' 프로세스를 웹 검색을 통해 수행하고 보고하라.
+### 🚨 [MANDATORY] Phase 0: Brand & Market Viability Check
+**[면제 조건]**: 이미 Phase 0을 통과하여 `작업.md`에 기록된 동일 브랜드 내의 기능 추가나 고도화 세션일 경우, 조사를 생략하고 "Phase 0: Validated (Existing)" 선언 후 즉시 다음 단계로 진행한다.
+
+모든 신규 프로젝트의 초기 기획(Phase 1) 시작 전, 반드시 아래의 'Phase 0' 프로세스를 웹 검색을 통해 수행하고 보고하라.
 
 **1. 상표권 전수 조사 (KIPRIS & Global Trademark)**
 - **대상**: 제안된 브랜드명 및 유사 발음 이름
