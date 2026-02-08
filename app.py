@@ -55,20 +55,6 @@ if sys.platform != "win32":
         time.tzset()
     except Exception:
         pass
-
-# --- LOG CLEANER (Silence Non-Critical Warnings) ---
-import logging
-# Filter out "missing ScriptRunContext" warning from Streamlit
-class NoContextFilter(logging.Filter):
-    def filter(self, record):
-        return "missing ScriptRunContext" not in record.getMessage()
-
-logging.getLogger("streamlit").addFilter(NoContextFilter())
-logging.getLogger("streamlit.runtime.scriptrunner.script_run_context").addFilter(NoContextFilter())
-# Silence CrewAI EventBus errors that are non-blocking
-logging.getLogger("crewai.telemetry").setLevel(logging.CRITICAL)
-# ---------------------------------------------------
-
 from agents import UltimateResearchAgents
 from tasks import UltimateResearchTasks
 from dotenv import load_dotenv
@@ -871,45 +857,37 @@ with col_left:
     st.markdown('<div class="glass-card">', unsafe_allow_html=True)
     st.markdown("### 📥 Research Request")
     
+    # Callback to sync template to text area
+    def sync_template():
+        sel = st.session_state.get('template_selection')
+        if sel == "💰 VC 투자 심의 (Investment Memo)":
+            st.session_state.research_input_area = "[대상 기업/기술]에 대한 투자 심의 보고서를 작성해줘. 시장성(TAM/SAM/SOM), 기술적 해자(Moat), 경쟁사 현황, 그리고 Exit 시나리오(M&A/IPO)를 포함해야 해."
+        elif sel == "⚔️ 경쟁사 심층 해부 (Competitor Deep Dive)":
+            st.session_state.research_input_area = "[나의 서비스]와 경쟁하는 Top 3 경쟁사([A], [B], [C])의 기능을 1:1로 비교하고, 그들의 숨겨진 약점과 우리가 파고들 수 있는 니치(Niche) 시장을 분석해줘."
+        elif sel == "🌍 글로벌 GTM 전략 (Market Entry)":
+            st.session_state.research_input_area = "2026년 [타겟 국가] 시장에 진출하기 위한 Go-To-Market 전략을 수립해줘. 현지 규제 장벽, 문화적 차이, 초기 마케팅 채널, 그리고 1년차 예상 KPI를 포함해."
+        elif sel == "🚨 위기 관리 & 리스크 워게임 (Risk Mgt)":
+            st.session_state.research_input_area = "[상황/이슈]가 발생했을 때의 최악의 시나리오(Worst-case)를 시뮬레이션하고, 법적/홍보적 대응 매뉴얼과 리스크 미티게이션(Mitigation) 플랜을 짜줘."
+        elif sel == "🛠️ 신제품 기획 & PMF 검증 (Product Strategy)":
+            st.session_state.research_input_area = "2026년 트렌드를 반영한 [신제품 아이디어]의 PMF(Product-Market Fit)를 검증해줘. 타겟 페르소나의 Pain Point, 예상되는 차별화 요소, 그리고 검증을 위한 MVP 스펙을 정의해."
+
     # Advanced Strategy Templates
-    template = st.selectbox("🎯 Strategic Templates (Expert Mode):", 
-                          ["직접 입력 (Custom)", 
-                           "💰 VC 투자 심의 (Investment Memo)", 
-                           "⚔️ 경쟁사 심층 해부 (Competitor Deep Dive)",
-                           "🌍 글로벌 GTM 전략 (Market Entry)",
-                           "🚨 위기 관리 & 리스크 워게임 (Risk Mgt)",
-                           "🛠️ 신제품 기획 & PMF 검증 (Product Strategy)"])
+    st.selectbox("🎯 Strategic Templates (Expert Mode):", 
+                ["직접 입력 (Custom)", 
+                 "💰 VC 투자 심의 (Investment Memo)", 
+                 "⚔️ 경쟁사 심층 해부 (Competitor Deep Dive)",
+                 "🌍 글로벌 GTM 전략 (Market Entry)",
+                 "🚨 위기 관리 & 리스크 워게임 (Risk Mgt)",
+                 "🛠️ 신제품 기획 & PMF 검증 (Product Strategy)"],
+                key="template_selection",
+                on_change=sync_template)
     
-    default_text = ""
-    if template == "💰 VC 투자 심의 (Investment Memo)":
-        default_text = "[대상 기업/기술]에 대한 투자 심의 보고서를 작성해줘. 시장성(TAM/SAM/SOM), 기술적 해자(Moat), 경쟁사 현황, 그리고 Exit 시나리오(M&A/IPO)를 포함해야 해."
-    elif template == "⚔️ 경쟁사 심층 해부 (Competitor Deep Dive)":
-        default_text = "[나의 서비스]와 경쟁하는 Top 3 경쟁사([A], [B], [C])의 기능을 1:1로 비교하고, 그들의 숨겨진 약점과 우리가 파고들 수 있는 니치(Niche) 시장을 분석해줘."
-    elif template == "🌍 글로벌 GTM 전략 (Market Entry)":
-        default_text = "2026년 [타겟 국가] 시장에 진출하기 위한 Go-To-Market 전략을 수립해줘. 현지 규제 장벽, 문화적 차이, 초기 마케팅 채널, 그리고 1년차 예상 KPI를 포함해."
-    elif template == "🚨 위기 관리 & 리스크 워게임 (Risk Mgt)":
-        default_text = "[상황/이슈]가 발생했을 때의 최악의 시나리오(Worst-case)를 시뮬레이션하고, 법적/홍보적 대응 매뉴얼과 리스크 미티게이션(Mitigation) 플랜을 짜줘."
-    elif template == "🛠️ 신제품 기획 & PMF 검증 (Product Strategy)":
-        default_text = "2026년 트렌드를 반영한 [신제품 아이디어]의 PMF(Product-Market Fit)를 검증해줘. 타겟 페르소나의 Pain Point, 예상되는 차별화 요소, 그리고 검증을 위한 MVP 스펙을 정의해."
-
-    # Session State for User Input to allow Magic Update
-    if 'research_input' not in st.session_state:
-        st.session_state.research_input = ""
-    
-    # Update input if template changes (and strict template selection)
-    if template != "직접 입력 (Custom)" and default_text:
-        # Only update if the box is empty or different template selected
-        # Simplification: Just set it. User can edit after.
-        if st.session_state.research_input != default_text:
-             st.session_state.research_input = default_text
-
     user_input = st.text_area("연구 주제 (초안):", 
-                             value=st.session_state.research_input,
                              placeholder="연구할 내용을 입력하세요... (예: 2026 AI 에이전트 시장 전망)",
                              height=150,
                              key="research_input_area")
     
-    # Update session state on change
+    # Update session state for internal logic compat
     st.session_state.research_input = user_input
     # [MOVED UP] Research Mode Selection (Must be defined BEFORE Magic Upgrade Logic)
     st.markdown("---")
@@ -1099,20 +1077,26 @@ with col_right:
                 # Sound Effect Trigger (Enhanced with JS for reliability)
                 if enable_sound:
                     import streamlit.components.v1 as components
-                    audio_url = "https://cdn.pixabay.com/audio/2022/10/16/audio_2e259e8306.mp3"
+                    # Using a more reliable notification sound URL (Bell/Ping)
+                    audio_url = "https://actions.google.com/sounds/v1/alarms/beep_short.ogg"
                     components.html(f"""
-                        <audio id="success-sound" style="display:none;" preload="auto">
-                            <source src="{audio_url}" type="audio/mpeg">
+                        <audio id="success-sound" preload="auto">
+                            <source src="{audio_url}" type="audio/ogg">
                         </audio>
                         <script>
-                            setTimeout(function() {{
+                            (function() {{
                                 var audio = document.getElementById("success-sound");
                                 if (audio) {{
+                                    audio.volume = 0.5;
                                     audio.play().catch(function(error) {{
                                         console.log("Autoplay blocked or failed:", error);
+                                        // Some browsers require explicit user interaction
+                                        document.addEventListener('click', function() {{
+                                            audio.play();
+                                        }}, {{ once: true }});
                                     }});
                                 }}
-                            }}, 500);
+                            }})();
                         </script>
                     """, height=0)
             except Exception as e:
