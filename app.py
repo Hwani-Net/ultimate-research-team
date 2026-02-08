@@ -978,29 +978,34 @@ with col_right:
     st.markdown("### 📄 Strategic Report")
     report_placeholder = st.empty()
     
-    if start_btn and user_input:
-        # Allow time for the dialog to visually close before blocking the thread with heavy research
+    if start_btn and st.session_state.get('research_input_area'):
+        # Allow time for the UI to register the click and show the spinner
         import time
-        time.sleep(1) 
         
-        with st.spinner("AI 팀이 최신 정보와 이미지를 분석 중입니다..."):
-            image_context = st.session_state.get('uploaded_image_b64')
-            
-            if enable_ab_test:
-                st.info("⚖️ A/B Testing Enabled: Running BOTH modes sequentially...")
+        # Set running state to prevent double execution and track progress
+        st.session_state['is_running'] = True
+        
+        with st.spinner("🚀 AI 팀이 최신 정보를 분석 중입니다 (수 분이 소요될 수 있습니다)..."):
+            try:
+                # Use value directly from the widget key to avoid sync issues
+                current_topic = st.session_state.research_input_area
+                image_context = st.session_state.get('uploaded_image_b64')
                 
-                # Run Mode A (3-Agent)
-                log_placeholder.markdown("### ⚡ Running Mode A: Speed Briefing...")
-                result_a = run_research(st.session_state.research_input, log_placeholder, image_context, "Speed Briefing (3-Agent)")
-                
-                # Run Mode B (5-Agent)
-                log_placeholder.markdown("### 💎 Running Mode B: Deep Strategy...")
-                result_b = run_research(st.session_state.research_input, log_placeholder, image_context, "Deep Strategy (5-Agent)")
-                
-                # Combine Results
-                result = f"""
+                if enable_ab_test:
+                    st.info("⚖️ A/B Testing Enabled: Running BOTH modes sequentially...")
+                    
+                    # Run Mode A (3-Agent)
+                    log_placeholder.markdown("### ⚡ Running Mode A: Speed Briefing...")
+                    result_a = run_research(current_topic, log_placeholder, image_context, "Speed Briefing (3-Agent)")
+                    
+                    # Run Mode B (5-Agent)
+                    log_placeholder.markdown("### 💎 Running Mode B: Deep Strategy...")
+                    result_b = run_research(current_topic, log_placeholder, image_context, "Deep Strategy (5-Agent)")
+                    
+                    # Combine Results
+                    result = f"""
 # ⚖️ Strategic A/B Test Report
-**Topic**: {st.session_state.research_input}
+**Topic**: {current_topic}
 **Date**: {datetime.datetime.now().strftime("%Y-%m-%d %H:%M")}
 
 ---
@@ -1016,40 +1021,45 @@ with col_right:
 > Focus: Investment Defense, ROI, Skepticism
 {result_b}
 """
-            else:
-                # Normal Single Mode Run
-                result = run_research(st.session_state.research_input, log_placeholder, image_context, research_mode)
+                else:
+                    # Normal Single Mode Run
+                    result = run_research(current_topic, log_placeholder, image_context, research_mode)
+                    
+                st.session_state['result'] = result
                 
-            st.session_state['result'] = result
-            
-            # Generate safe filename with timestamp to avoid encoding/OS issues
-            timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-            st.session_state['report_filename'] = f"Strategic_Report_{timestamp}.md"
-            
-            st.balloons()
-            
-            # Sound Effect Trigger (Enhanced with JS for reliability)
-            if enable_sound:
-                import streamlit.components.v1 as components
-                audio_url = "https://cdn.pixabay.com/audio/2022/10/16/audio_2e259e8306.mp3"
-                components.html(f"""
-                    <audio id="success-sound" style="display:none;" preload="auto">
-                        <source src="{audio_url}" type="audio/mpeg">
-                    </audio>
-                    <script>
-                        setTimeout(function() {{
-                            var audio = document.getElementById("success-sound");
-                            if (audio) {{
-                                audio.play().catch(function(error) {{
-                                    console.log("Autoplay blocked or failed:", error);
-                                }});
-                            }}
-                        }}, 500);
-                    </script>
-                """, height=0)
+                # Generate safe filename with timestamp to avoid encoding/OS issues
+                timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+                st.session_state['report_filename'] = f"Strategic_Report_{timestamp}.md"
+                
+                st.balloons()
+                
+                # Sound Effect Trigger (Enhanced with JS for reliability)
+                if enable_sound:
+                    import streamlit.components.v1 as components
+                    audio_url = "https://cdn.pixabay.com/audio/2022/10/16/audio_2e259e8306.mp3"
+                    components.html(f"""
+                        <audio id="success-sound" style="display:none;" preload="auto">
+                            <source src="{audio_url}" type="audio/mpeg">
+                        </audio>
+                        <script>
+                            setTimeout(function() {{
+                                var audio = document.getElementById("success-sound");
+                                if (audio) {{
+                                    audio.play().catch(function(error) {{
+                                        console.log("Autoplay blocked or failed:", error);
+                                    }});
+                                }}
+                            }}, 500);
+                        </script>
+                    """, height=0)
+            except Exception as e:
+                st.error(f"실행 중 치명적 오류 발생: {e}")
+            finally:
+                st.session_state['is_running'] = False
     
     
     if 'result' in st.session_state and st.session_state['result']:
+        # Ensure result is always treated as string for display
         result_text = str(st.session_state['result'])
         report_placeholder.markdown('<div class="report-card">', unsafe_allow_html=True)
         report_placeholder.markdown(result_text)
