@@ -55,8 +55,8 @@ if sys.platform != "win32":
         time.tzset()
     except Exception:
         pass
-from agents import UltimateResearchAgents
-from tasks import UltimateResearchTasks
+from agents import UltimateResearchAgents, BoardOfDirectors, ProjectTeam
+from tasks import UltimateResearchTasks, BoardTasks, ProjectTeamTasks
 from dotenv import load_dotenv
 import datetime
 try:
@@ -541,6 +541,168 @@ def run_research(topic, log_container, image_data=None, research_mode="Deep Stra
             print(error_msg)
             return error_msg
 
+def run_board_and_project_team(project_idea, log_container):
+    """
+    Dual-Layer Governance System: Board (Strategy) -> Project Team (Execution)
+    """
+    handler = StreamlitCallbackHandler(log_container)
+    
+    with contextlib.redirect_stdout(handler):
+        print(f"🏛️ [BOARD MEETING] Convening Board of Directors...")
+        print("=" * 70)
+        
+        # === PHASE 1: BOARD STRATEGY SESSION ===
+        print("\n📋 PHASE 1: BOARD STRATEGY SESSION")
+        print("-" * 70)
+        
+        board = BoardOfDirectors()
+        board_tasks = BoardTasks()
+        
+        # Assemble the Board
+        ceo = board.ceo()
+        cfo = board.cfo()
+        cto = board.cto()
+        cmo = board.cmo()
+        clo = board.clo()
+        
+        # Create strategy session task
+        strategy_task = board_tasks.strategy_session_task(
+            ceo, cfo, cto, cmo, clo, project_idea
+        )
+        
+        # Run Board Meeting
+        try:
+            board_crew = Crew(
+                agents=[ceo, cfo, cto, cmo, clo],
+                tasks=[strategy_task],
+                verbose=True,
+                process=Process.sequential,
+                memory=False
+            )
+            
+            print("\n🎯 Executing Board Strategy Session...")
+            board_result = board_crew.kickoff()
+            
+            if hasattr(board_result, 'raw'):
+                board_minutes = board_result.raw
+            else:
+                board_minutes = str(board_result)
+            
+            print("\n✅ Board Meeting Complete")
+            print("📊 Strategic Assessment:")
+            print(board_minutes[:500] + "..." if len(board_minutes) > 500 else board_minutes)
+            
+            # Check if Board approved
+            if "APPROVED" not in board_minutes.upper() and "GO" in board_minutes.upper():
+                print("\n✅ [BOARD DECISION]: Project APPROVED")
+                approved = True
+            elif "REJECTED" in board_minutes.upper() or "NO-GO" in board_minutes.upper():
+                print("\n❌ [BOARD DECISION]: Project REJECTED")
+                return f"## \ud83d\udeab Board Decision: Project Rejected\n\n{board_minutes}"
+            else:
+                print("\n⚠️ [BOARD DECISION]: Conditional Approval (Proceed with caution)")
+                approved = True
+            
+            if not approved:
+                return f"## \ud83d\udeab Board Decision: Project Rejected\n\n{board_minutes}"
+            
+            # === PHASE 2: PROJECT TEAM PLANNING ===
+            print("\n\n📋 PHASE 2: PROJECT TEAM PLANNING")
+            print("-" * 70)
+            
+            team = ProjectTeam()
+            team_tasks = ProjectTeamTasks()
+            
+            # Assemble Project Team
+            pm = team.project_manager()
+            designer = team.designer()
+            backend = team.backend_engineer()
+            frontend = team.frontend_engineer()
+            qa = team.qa_engineer()
+            
+            # Create planning task
+            planning_task = team_tasks.planning_task(pm, board_minutes)
+            
+            try:
+                planning_crew = Crew(
+                    agents=[pm],
+                    tasks=[planning_task],
+                    verbose=True,
+                    process=Process.sequential,
+                    memory=False
+                )
+                
+                print("\n🎯 Project Manager creating implementation plan...")
+                planning_result = planning_crew.kickoff()
+                
+                if hasattr(planning_result, 'raw'):
+                    implementation_plan = planning_result.raw
+                else:
+                    implementation_plan = str(planning_result)
+                
+                print("\n✅ Implementation Plan Created")
+                
+                # === PHASE 3: PROJECT TEAM EXECUTION ===
+                print("\n\n📋 PHASE 3: PROJECT TEAM EXECUTION")
+                print("-" * 70)
+                
+                execution_task = team_tasks.execution_task(
+                    backend, frontend, designer, qa, implementation_plan
+                )
+                
+                execution_crew = Crew(
+                    agents=[pm, designer, backend, frontend, qa],
+                    tasks=[execution_task],
+                    verbose=True,
+                    process=Process.sequential,
+                    memory=False
+                )
+                
+                print("\n🎯 Project Team executing implementation...")
+                execution_result = execution_crew.kickoff()
+                
+                if hasattr(execution_result, 'raw'):
+                    final_output = execution_result.raw
+                else:
+                    final_output = str(execution_result)
+                
+                print("\n✅ [PROJECT COMPLETE] All phases finished successfully")
+                
+                # Combine all results
+                combined_result = f"""# \ud83c\udfdb\ufe0f Dual-Layer Governance Report
+
+## \ud83d\udcc4 Executive Summary
+Project: {project_idea}
+
+---
+
+## \ud83c\udfdb\ufe0f Phase 1: Board of Directors Strategic Session
+{board_minutes}
+
+---
+
+## \ud83d\udcca Phase 2: Project Team Implementation Plan
+{implementation_plan}
+
+---
+
+## \ud83d\udee0\ufe0f Phase 3: Project Team Execution Results
+{final_output}
+"""
+                return combined_result
+                
+            except Exception as e:
+                import traceback
+                error_msg = f"❌ [PROJECT TEAM ERROR]: {str(e)}\n\n{traceback.format_exc()}"
+                print(error_msg)
+                return f"## Board Approved, but Project Team failed\n\n{board_minutes}\n\n{error_msg}"
+            
+        except Exception as e:
+            import traceback
+            error_msg = f"❌ [BOARD ERROR]: {str(e)}\n\n{traceback.format_exc()}"
+            print(error_msg)
+            return error_msg
+
 # Sidebar: System Guide
 with st.sidebar:
     st.image("https://img.icons8.com/wired/256/ffffff/brain.png", width=80)
@@ -899,9 +1061,9 @@ with col_left:
     with col_mode_1:
         research_mode = st.radio(
             "Select Team Composition:",
-            ["Speed Briefing (3-Agent)", "Deep Strategy (5-Agent)"],
+            ["Speed Briefing (3-Agent)", "Deep Strategy (5-Agent)", "🏛️ Board + Project Team (Dual-Layer)"],
             index=1,
-            help="3-Agent: Fast, MVP validation. 5-Agent: Board-level Strategy & Investment Defense.",
+            help="3-Agent: Fast, MVP validation. 5-Agent: Board-level Strategy. Board+Project: Full governance system.",
             key="research_mode_selection_radio"
         )
     
@@ -1064,8 +1226,14 @@ with col_right:
 {result_b}
 """
                 else:
-                    # Normal Single Mode Run
-                    result = run_research(current_topic, log_placeholder, image_context, research_mode)
+                    # Check if Board + Project Team mode
+                    if "Board + Project Team" in research_mode:
+                        # Dual-Layer Governance Mode
+                        result = run_board_and_project_team(current_topic, log_placeholder)
+                    else:
+                        # Normal Single Mode Run (3-Agent or 5-Agent)
+                        result = run_research(current_topic, log_placeholder, image_context, research_mode)
+
                     
                 st.session_state['result'] = result
                 

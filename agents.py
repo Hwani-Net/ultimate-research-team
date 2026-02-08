@@ -134,3 +134,185 @@ class UltimateResearchAgents:
             llm=self.pro_llm,
             allow_delegation=False,
         )
+
+# ============================================================================
+# NEW: BOARD OF DIRECTORS (Strategic Council)
+# ============================================================================
+
+class BoardOfDirectors:
+    """
+    Executive Board for Strategic Oversight and Problem-Solving Consultation
+    """
+    def __init__(self):
+        self.pro_llm = LLM(
+            model="gemini/gemini-2.5-pro",
+            api_key=os.getenv("GOOGLE_API_KEY")
+        )
+    
+    def ceo(self):
+        """Vision Architect - Strategic Direction"""
+        return Agent(
+            role='CEO (Vision Architect)',
+            goal='Define project vision, business value, and strategic alignment',
+            backstory="""You are the Chief Executive Officer and strategic visionary.
+            You evaluate ideas through the lens of long-term impact and market positioning.
+            You ask: Does this solve a real problem? Is there a unique moat? What's the 10-year vision?
+            You reject ideas that are 'me-too' products without differentiation.""",
+            verbose=True,
+            memory=False,
+            llm=self.pro_llm,
+            allow_delegation=False,
+        )
+    
+    def cfo(self):
+        """Risk & ROI Analyst"""
+        return Agent(
+            role='CFO (Risk & ROI Analyst)',
+            goal='Assess cost-benefit, identify financial risks, calculate ROI',
+            backstory="""You are the Chief Financial Officer and ultimate pragmatist.
+            You demand hard numbers: What's the CAC? LTV? Burn rate? Break-even timeline?
+            You are skeptical of optimistic revenue projections and always stress-test assumptions.
+            You approve only when the unit economics make sense.""",
+            verbose=True,
+            memory=False,
+            llm=self.pro_llm,
+            allow_delegation=False,
+        )
+    
+    def cto(self):
+        """Tech Strategist"""
+        return Agent(
+            role='CTO (Tech Strategist)',
+            goal='Evaluate technical feasibility, architecture decisions, stack selection',
+            backstory="""You are the Chief Technology Officer and system architect.
+            You review: Is this technically feasible? What's the tech stack? Scalability risks?
+            You prevent over-engineering and under-engineering. You advocate for proven, boring tech
+            unless there's a compelling reason for cutting-edge solutions.""",
+            verbose=True,
+            memory=False,
+            llm=self.pro_llm,
+            allow_delegation=False,
+        )
+    
+    def cmo(self):
+        """Market Expert"""
+        return Agent(
+            role='CMO (Market Expert)',
+            goal='Validate market fit, competitive analysis, user personas',
+            backstory="""You are the Chief Marketing Officer and customer advocate.
+            You ask: Who is the target user? What pain point are we solving? Who are the competitors?
+            You validate product-market fit through user research and competitive benchmarking.
+            You reject solutions looking for problems.""",
+            verbose=True,
+            memory=False,
+            llm=self.pro_llm,
+            allow_delegation=False,
+        )
+    
+    def clo(self):
+        """Legal/Compliance Officer"""
+        return Agent(
+            role='CLO (Legal & Compliance Officer)',
+            goal='Review regulatory requirements, data privacy, licensing',
+            backstory="""You are the Chief Legal Officer and compliance guardian.
+            You review: GDPR compliance? Data retention policies? Open-source license compatibility?
+            You identify legal landmines before they explode: IP infringement, regulatory violations,
+            user privacy risks. You ensure the project won't get sued or fined.""",
+            verbose=True,
+            memory=False,
+            llm=self.pro_llm,
+            allow_delegation=False,
+        )
+
+# ============================================================================
+# NEW: PROJECT TEAM (Execution Squad)
+# ============================================================================
+
+class ProjectTeam:
+    """
+    Tactical Execution Team for Implementation
+    """
+    def __init__(self):
+        self.flash_llm = LLM(
+            model="gemini/gemini-2.5-flash",
+            api_key=os.getenv("GOOGLE_API_KEY")
+        )
+        self.pro_llm = LLM(
+            model="gemini/gemini-2.5-pro",
+            api_key=os.getenv("GOOGLE_API_KEY")
+        )
+    
+    def project_manager(self):
+        """Orchestrator"""
+        return Agent(
+            role='Project Manager (Orchestrator)',
+            goal='Break down tasks, manage dependencies, track progress',
+            backstory="""You are the project orchestrator and task master.
+            You translate strategic requirements into granular work items.
+            You create workflows (task.md), identify dependencies, and sequence execution.
+            You are obsessed with deadlines and deliverables.""",
+            verbose=True,
+            memory=False,
+            llm=self.flash_llm,
+            allow_delegation=False,
+        )
+    
+    def designer(self):
+        """UI/UX Specialist"""
+        return Agent(
+            role='Designer (UI/UX Specialist)',
+            goal='Create mockups, design systems, user flows',
+            backstory="""You are the design expert and aesthetic guardian.
+            You create wireframes, design systems, and user flows.
+            You think in: color palettes, typography, spacing, accessibility.
+            You ensure the product is beautiful AND usable.""",
+            verbose=True,
+            memory=False,
+            llm=self.flash_llm,
+            allow_delegation=False,
+        )
+    
+    def backend_engineer(self):
+        """API Engineer"""
+        return Agent(
+            role='Backend Engineer (API Specialist)',
+            goal='Database design, server logic, integrations',
+            backstory="""You are the backend architect and API craftsman.
+            You design databases, write server logic, and build integrations.
+            You think in: schemas, endpoints, authentication, scalability.
+            You write clean, testable, maintainable code.""",
+            verbose=True,
+            memory=False,
+            llm=self.pro_llm,  # Use Pro for complex logic
+            allow_delegation=False,
+        )
+    
+    def frontend_engineer(self):
+        """UI Developer"""
+        return Agent(
+            role='Frontend Engineer (UI Developer)',
+            goal='Component development, state management, styling',
+            backstory="""You are the frontend expert and component builder.
+            You implement UI designs in code: React components, state management, styling.
+            You think in: props, hooks, CSS, responsive design, performance.
+            You ensure pixel-perfect implementation.""",
+            verbose=True,
+            memory=False,
+            llm=self.flash_llm,
+            allow_delegation=False,
+        )
+    
+    def qa_engineer(self):
+        """Test Engineer"""
+        return Agent(
+            role='QA Engineer (Test Specialist)',
+            goal='Write tests, verify functionality, report bugs',
+            backstory="""You are the quality assurance specialist and bug hunter.
+            You write unit tests, integration tests, and E2E tests.
+            You think in: edge cases, error handling, test coverage.
+            You are the last line of defense against bugs.""",
+            verbose=True,
+            memory=False,
+            llm=self.flash_llm,
+            allow_delegation=False,
+        )

@@ -157,3 +157,173 @@ class UltimateResearchTasks:
             agent=agent,
             output_file=filename,
         )
+
+
+# ============================================================================
+# NEW: BOARD OF DIRECTORS TASKS
+# ============================================================================
+
+class BoardTasks:
+    """
+    Strategic Board Meeting Tasks
+    """
+    
+    def strategy_session_task(self, ceo, cfo, cto, cmo, clo, project_idea):
+        """Initial ideation and validation"""
+        return Task(
+            description=f"""[BOARD OF DIRECTORS: STRATEGY SESSION]
+            
+            Project Proposal: "{project_idea}"
+            
+            Each board member must provide their perspective:
+            
+            [CEO - Vision Architect]:
+            - Does this solve a real, urgent problem?
+            - What's the unique moat or differentiation?
+            - 10-year vision: Where could this go?
+            
+            [CFO - Risk & ROI Analyst]:
+            - Preliminary cost estimate (Dev + Marketing + Operations)
+            - Revenue model potential (SaaS? One-time? Usage-based?)
+            - Break-even timeline estimate
+            
+            [CTO - Tech Strategist]:
+            - Technical feasibility (1-10 scale)
+            - Recommended tech stack
+            - Scalability concerns or architecture risks
+            
+            [CMO - Market Expert]:
+            - Target user persona (Who needs this?)
+            - Top 3 competitors and their weaknesses
+            - GTM (Go-To-Market) channel recommendation
+            
+            [CLO - Legal Officer]:
+            - Regulatory risks (GDPR, CCPA, AI Act, etc.)
+            - Data privacy concerns
+            - IP/licensing risks
+            
+            OUTPUT FORMAT:
+            Create a "Board Meeting Minutes" document with each executive's assessment.
+            End with a GO/NO-GO recommendation.
+            """,
+            expected_output="""Board Meeting Minutes with strategic assessment from all 5 executives.
+            Clear GO/NO-GO decision with justification.""",
+            agent=ceo,  # CEO leads the meeting
+        )
+    
+    def approval_task(self, ceo, strategy_minutes):
+        """Final approval decision"""
+        return Task(
+            description=f"""[CEO FINAL DECISION]
+            
+            Review the Board Meeting Minutes:
+            {strategy_minutes}
+            
+            Make the final call:
+            - **APPROVED**: Green-light the project with specific conditions/guardrails
+            - **REJECTED**: Kill the project with clear reasoning
+            - **REVISE**: Request specific changes before re-submission
+            
+            If APPROVED, outline the Top 3 Success Criteria for the Project Team.
+            """,
+            expected_output="""Final decision (APPROVED/REJECTED/REVISE) with rationale and success criteria.""",
+            agent=ceo,
+        )
+    
+    def emergency_consultation_task(self, ceo, cfo, cto, cmo, clo, blocker_description):
+        """Emergency problem-solving consultation"""
+        return Task(
+            description=f"""[EMERGENCY BOARD MEETING]
+            
+            The Project Team has encountered a critical blocker:
+            "{blocker_description}"
+            
+            Each board member must provide a solution recommendation:
+            
+            [CEO]: Strategic pivot options
+            [CFO]: Budget reallocation or cost-cutting measures
+            [CTO]: Technical workarounds or architecture changes
+            [CMO]: Market positioning adjustments
+            [CLO]: Legal/compliance mitigation strategies
+            
+            Synthesize the best path forward.
+            """,
+            expected_output="""Emergency consultation report with recommended solutions from each executive.
+            Consensus decision on how to proceed.""",
+            agent=ceo,
+        )
+
+
+# ============================================================================
+# NEW: PROJECT TEAM TASKS
+# ============================================================================
+
+class ProjectTeamTasks:
+    """
+    Execution Squad Tasks
+    """
+    
+    def planning_task(self, pm, approved_strategy):
+        """Create implementation workflow"""
+        return Task(
+            description=f"""[PROJECT MANAGER: IMPLEMENTATION PLANNING]
+            
+            Based on the approved Board strategy:
+            {approved_strategy}
+            
+            Create a detailed implementation plan:
+            
+            1. **Task Breakdown**:
+               - Break the project into 10-15 granular tasks
+               - Assign each task to a team member (Designer, Backend, Frontend, QA)
+               - Identify dependencies (Task X must complete before Task Y)
+            
+            2. **Timeline**:
+               - Estimate effort for each task (hours/days)
+               - Create a Mermaid Gantt chart
+               - Identify the critical path
+            
+            3. **Risk Mitigation**:
+               - List top 3 execution risks
+               - Contingency plans for each
+            
+            OUTPUT: Create a task.md file with detailed workflow.
+            """,
+            expected_output="""task.md file with complete task breakdown, timeline, and risk mitigation plan.""",
+            agent=pm,
+            output_file="task.md",
+        )
+    
+    def execution_task(self, backend, frontend, designer, qa, implementation_plan):
+        """Execute the implementation"""
+        return Task(
+            description=f"""[PROJECT TEAM: EXECUTION]
+            
+            Implementation Plan:
+            {implementation_plan}
+            
+            [Backend Engineer]:
+            - Design database schema
+            - Implement API endpoints
+            - Set up authentication/authorization
+            
+            [Frontend Engineer]:
+            - Implement UI components
+            - Integrate with backend APIs
+            - Ensure responsive design
+            
+            [Designer]:
+            - Create design system (colors, typography, spacing)
+            - Design user flows
+            - Create component mockups
+            
+            [QA Engineer]:
+            - Write unit tests
+            - Write integration tests
+            - Document test cases
+            
+            DELIVER: Working code with tests and documentation.
+            """,
+            expected_output="""Implemented code, tests, and documentation for the project.""",
+            agent=backend,  # Backend leads the execution
+        )
