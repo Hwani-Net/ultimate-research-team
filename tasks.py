@@ -175,6 +175,14 @@ class BoardTasks:
             
             Project Proposal: "{project_idea}"
             
+            [MANDATORY PHASE 0: BRAND & MARKET VIABILITY]
+            Before individual assessments, the CLO and CMO must jointly report on:
+            1. Trademark availability (KIPRIS/Global)
+            2. App Store/Market existence
+            3. Domain (.com, .io, .co.kr) availability
+            YOU MUST start the report with: "Phase 0: Brand Validation PASSED" (or FAILED).
+            
+            [STRATEGIC ASSESSMENT]
             Each board member must provide their perspective:
             
             [CEO - Vision Architect]:
