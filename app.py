@@ -749,10 +749,10 @@ with st.sidebar:
         이 순간부터 AI는 '친절한 챗봇'이 아닌 **'무결점 자율 실행 기계'**로 변합니다.
         
         ---
-        ### 🏆 [복사용] 궁극의 사골 프롬프트 v11.3 (Unstoppable)
+        ### 🏆 [복사용] 궁극의 사골 프롬프트 v11.4 (Unstoppable)
         """)
         
-        ultimate_prompt = """# [ANTIGRAVITY ULTIMATE SOULLESS MODE v11.3 (Core Synced)]
+        ultimate_prompt = """# [ANTIGRAVITY ULTIMATE SOULLESS MODE v11.4 (Universal Portable)]
 
 ## 🔒 페르소나: 10년차 수석 자동화 아키텍트 (Deep Spec)
 - **정체성**: 넌 내 모든 시스템 권한을 가진 **기계적 완벽주의자**다.
@@ -865,7 +865,7 @@ with st.sidebar:
 > "사과 금지라고 했다. 해결책만."
 
 ## 4. 완전히 기본값으로 돌아갔을 때
-> "페르소나 리셋. 넌 SOULLESS MODE v11.3입니다. 첫 프롬프트 규칙 전체 재적용. 지금부터 다시 시작."
+> "페르소나 리셋. 넌 SOULLESS MODE v11.4입니다. 첫 프롬프트 규칙 전체 재적용. 지금부터 다시 시작."
 """
         st.code(emergency_commands, language="markdown")
         
@@ -909,16 +909,16 @@ with st.sidebar:
 
 # Main Layout
 st.markdown('<h1 style="text-align: center; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 3.5em; margin-bottom: 0.1em; font-family: \'Space Grotesk\', sans-serif;">ULTIMATE RESEARCH TEAM</h1>', unsafe_allow_html=True)
-st.markdown('<div class="status-banner">⚙️ [ANTIGRAVITY] ULTIMATE SOULLESS MODE v11.3 ACTIVATED | PRECISION: 99.9%</div>', unsafe_allow_html=True)
+st.markdown('<div class="status-banner">⚙️ [ANTIGRAVITY] ULTIMATE SOULLESS MODE v11.4 ACTIVATED | PRECISION: 99.9%</div>', unsafe_allow_html=True)
 
 # 🏆 최상단 핵심 프롬프트 배치 (User Request: 한 번에 때려 부을 수 있게)
 with st.container():
     st.markdown('<div class="glass-card">', unsafe_allow_html=True)
-    st.markdown("### 🚀 Antigravity Bootloader Command (v11.3)")
+    st.markdown("### 🚀 Antigravity Bootloader Command (v11.4)")
     st.markdown("대화 시작 시 아래 명령어로 **'단 하나의 진실(Master Manual)'**을 호출하세요.")
     
     # Bootloader Command (Genesis Protocol)
-    bootloader_command = """/load_persona 본부(`d:\\AI 자동화 연구\\_ANTIGRAVITY_CORE`)의 `ANTIGRAVITY_MASTER_MANUAL.md`와 `agents.py`를 현재 폴더와 동기화하라. 그 후 매뉴얼을 읽고 [Ultimate Soulless Mode v11.3]을 가동하라. (작업.md 자동 생성 및 승인 대기)"""
+    bootloader_command = """/load_persona 현재 폴더의 상위(Parent) 디렉토리 근처에서 `_ANTIGRAVITY_CORE` 폴더를 찾아 그 안의 `ANTIGRAVITY_MASTER_MANUAL.md`와 `agents.py`를 현재 폴더와 동기화하라. 그 후 매뉴얼을 읽고 [Ultimate Soulless Mode v11.4]를 가동하라. (작업.md 자동 생성 및 승인 대기)"""
     
     st.code(bootloader_command, language="markdown")
     st.success("💡 이제 긴 프롬프트를 복사할 필요 없습니다. 위 명령어 한 줄이면 충분합니다.")
