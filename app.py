@@ -29,10 +29,24 @@ import contextlib
 import io
 import re
 from crewai import Crew, Process
+
+# Set Timezone to KST
+os.environ["TZ"] = "Asia/Seoul"
+if sys.platform != "win32":
+    try:
+        import time
+        time.tzset()
+    except Exception:
+        pass
 from agents import UltimateResearchAgents
 from tasks import UltimateResearchTasks
 from dotenv import load_dotenv
 import datetime
+try:
+    import pytz
+    KST = pytz.timezone('Asia/Seoul')
+except ImportError:
+    KST = datetime.timezone(datetime.timedelta(hours=9))
 
 # Page Config
 st.set_page_config(page_title="Ultimate Research Team (Gemini 2.5)", page_icon="🧠", layout="wide")
@@ -1020,10 +1034,11 @@ with col_right:
                     result_b = run_research(current_topic, log_placeholder, image_context, "Deep Strategy (5-Agent)")
                     
                     # Combine Results
+                    now_kst = datetime.datetime.now(KST).strftime("%Y-%m-%d %H:%M")
                     result = f"""
 # ⚖️ Strategic A/B Test Report
 **Topic**: {current_topic}
-**Date**: {datetime.datetime.now().strftime("%Y-%m-%d %H:%M")}
+**Date**: {now_kst} (KST)
 
 ---
 
@@ -1044,8 +1059,8 @@ with col_right:
                     
                 st.session_state['result'] = result
                 
-                # Generate safe filename with timestamp to avoid encoding/OS issues
-                timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+                # Generate safe filename with KST timestamp
+                timestamp = datetime.datetime.now(KST).strftime("%Y%m%d_%H%M%S")
                 st.session_state['report_filename'] = f"Strategic_Report_{timestamp}.md"
                 
                 st.balloons()
