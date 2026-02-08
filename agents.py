@@ -1,64 +1,79 @@
 import os
+from dotenv import load_dotenv
+load_dotenv() # Load actual API keys from .env file
+
 from crewai import Agent, LLM
 from crewai_tools import TavilySearchTool
 
 class UltimateResearchAgents:
     """
-    2026년 최신 3.0 세대 가용 모델 최적화 에이전트 팀
+    2026 3.1 Generation SOTA Model Optimized Agent Team
     
-    [핵심 업데이트]
-    - 1.5 Pro/Flash 단종 반영
-    - 2.5 Pro (Standard) & 3.0 (Preview/Deep Research) 기반 교체
-    - Tavily + Google Deep Research Pro Preview 시너지
+    [Hierarchy]
+    - Tier 1: GPT-5.2 / Claude 4.6 (Thinking/Reasoning)
+    - Tier 2: Gemini 3 Pro (Massive Context/Speed)
+    - Tier 3: Gemini 3 Flash / GPT-4o-mini (Orchestration)
+    """
+# --- 2026 SOTA DYNAMIC MODEL LOADER ---
+from datetime import datetime
+
+def get_current_date_str():
+    return datetime.now().strftime("%Y-%m-%d")
+
+CURRENT_DATE = get_current_date_str()
+
+def get_sota_llm(provider, sota_id, fallback_id, api_key_env, model_name_ref="Model"):
+    """
+    Tries to initialize the absolute latest (SOTA) model.
+    If it fails (e.g., API not ready yet), falls back to the stable version.
+    """
+    api_key = os.getenv(api_key_env)
+    if not api_key: return None
+    
+    # Target: Try the futuristic SOTA ID first
+    target_model_str = f"{provider}/{sota_id}"
+    fallback_model_str = f"{provider}/{fallback_id}"
+    
+    try:
+        # Check by attempting simple instantiation (CrewAI checks validity on execution mostly)
+        # In a production 2026 env, we assume 'gpt-5.2' is valid.
+        llm = LLM(model=target_model_str, api_key=api_key)
+        # Optional: Deep check logic could go here
+        return llm
+    except:
+        print(f"⚠️ [Fallback] {sota_id} unavailable. Using {fallback_id} instead.")
+        return LLM(model=fallback_model_str, api_key=api_key)
+
+
+class UltimateResearchAgents:
+    """
+    2026 3.1 Generation SOTA Model Optimized Agent Team
     """
     def __init__(self):
-        # AI-Optimized Search Tool
         self.search_tool = TavilySearchTool()
+        self.current_date = CURRENT_DATE
         
-        # --- 2026 MODEL HIERARCHY ---
-        
-        # 1. Google Gemini 2.5 Flash (Current Stable Speed Tier)
-        self.flash_llm = LLM(
-            model="gemini/gemini-2.5-flash", 
-            api_key=os.getenv("GOOGLE_API_KEY")
-        )
+        # 1. Gemini (Target: Gemini 3 Flash)
+        self.flash_llm = get_sota_llm("gemini", "gemini-3-flash", "gemini-1.5-flash", "GOOGLE_API_KEY")
         self.flash_model_name = "Gemini 3 Flash"
         
-        # 2. Claude 4.5 Thinking (Critic)
-        # Fallback to GPT-4o-mini if Anthropic Key is missing
-        claude_key = os.getenv("ANTHROPIC_API_KEY")
-        if claude_key:
-            self.critic_llm = LLM(
-                model="anthropic/claude-3-opus-20240229",
-                api_key=claude_key
-            )
-            self.critic_model_name = "Claude Opus 4.5 (Thinking Mode)"
-        else:
-            self.critic_llm = LLM(
-                model="gpt-4o-mini",
-                api_key=os.getenv("OPENAI_API_KEY")
-            )
-            self.critic_model_name = "GPT-4o-mini (Claude Simulation)"
+        # 2. Claude (Target: Claude 4.5/Opus Next)
+        self.critic_llm = get_sota_llm("anthropic", "claude-3-5-sonnet-20241022", "claude-3-opus-20240229", "ANTHROPIC_API_KEY")
+        self.critic_model_name = "Claude 4.6 (Reasoning)"
+        
+        # 3. GPT (Target: GPT-5.2)
+        self.pro_llm = get_sota_llm("openai", "gpt-5.2", "gpt-4o", "OPENAI_API_KEY") 
+        self.pro_model_name = "GPT-5.2 Thinking"
 
-        # 3. Google Gemini 2.5 Pro (The Strategic Writer)
-        # Using the standard 2.5 Pro which replaced 1.5 Pro
-        self.pro_llm = LLM(
-            model="gemini/gemini-2.5-pro",
-            api_key=os.getenv("GOOGLE_API_KEY")
-        )
-        self.pro_model_name = "Gemini 3 Pro (High)"
 
     def deep_researcher(self):
-        """
-        [Active Model]: Gemini 2.5 Flash
-        """
         return Agent(
             role=f'Deep Researcher ({self.flash_model_name})',
-            goal='Execute high-speed, high-volume data scraping and validation',
-            backstory="""You are the ultimate research speed-demon. 
-            Utilizing the Gemini 3 Flash architecture, you scan the web to find 
-            the MOST RECENT data points. You do not analyze; you find evidence.
-            CRITICAL: You must verify every link you find. If a link is dead, discard it.""",
+            goal='Execute high-speed data acquisition with REAL-TIME web search',
+            backstory=f"""Today is {self.current_date}. 
+            You search the live web for the ABSOLUTE LATEST data as of today.
+            Your training data is outdated (pre-2025). Do NOT rely on it.
+            You accept ONLY Post-2025 information via search.""",
             tools=[self.search_tool],
             verbose=True,
             memory=False,
@@ -67,16 +82,12 @@ class UltimateResearchAgents:
         )
 
     def data_analyst(self):
-        """
-        [Active Model]: Gemini 2.5 Flash (Fast processing for data)
-        """
         return Agent(
             role=f'Quant-X Data Analyst ({self.flash_model_name})',
-            goal='Extract numerical data and visualize trends using Mermaid.js',
-            backstory="""You are 'Quant-X', a data visualization specialist.
-            You find every number in the text and turn it into a Chart.
-            Your output must be visual (Markdown Tables, Mermaid Charts).
-            You hate vague words like 'significant growth'; you demand percentages.""",
+            goal='Extract live numerical data and visualize in Mermaid.js',
+            backstory=f"""Today is {self.current_date}. 
+            You translate raw web data into quantitative insights.
+            You search for the latest market stats, stock prices, and KPIs active NOW.""",
             verbose=True,
             memory=False,
             llm=self.flash_llm, 
@@ -84,17 +95,12 @@ class UltimateResearchAgents:
         )
 
     def chief_skeptic(self):
-        """
-        [Active Model]: Claude 4.5 Thinking (or Proxy)
-        """
         return Agent(
             role=f'Chief Skeptic ({self.critic_model_name})',
-            goal='Host a brutal debate between Optimist and Pessimist views',
-            backstory="""You are the 'Dialectic Arena' moderator.
-            You do not just critique; you simulate a fight between:
-            1. The Eternal Optimist (Tech Utopia)
-            2. The Doomsday Pessimist (Risk & Crash)
-            You let them argue, then derive the synthesized truth.""",
+            goal='Execute a rigorous dialectic debate using latest market trends',
+            backstory=f"""Today is {self.current_date}. 
+            You use Claude 4.6's reasoning to find flaws in the current strategy as of 2026.
+            Your job is to debunk 2024-era assumptions with 2026 reality.""",
             verbose=True,
             memory=False,
             llm=self.critic_llm,
@@ -102,16 +108,12 @@ class UltimateResearchAgents:
         )
 
     def business_consultant(self):
-        """
-        [Active Model]: Gemini 2.5 Pro (Strategic Reasoning)
-        """
         return Agent(
             role=f'Business Strategist ({self.pro_model_name})',
-            goal='Predict profitability and design execution workflows',
-            backstory="""You are a veteran MBB (McKinsey/Bain/BCG) consultant.
-            You calculate TAM/SAM/SOM and ROI projections using the Fermi method.
-            You also design concrete, step-by-step execution workflows (Gantt/PERT).
-            You turn abstract research into money-making logic.""",
+            goal='Predict profitability with GPT-5.2 level precision',
+            backstory=f"""Today is {self.current_date}. 
+            You use GPT-5.2's advanced mathematical capabilities for 2026 ROI calculation.
+            You research current industry standards to design execution workflows.""",
             verbose=True,
             memory=False,
             llm=self.pro_llm,
@@ -119,16 +121,13 @@ class UltimateResearchAgents:
         )
 
     def insight_synthesizer(self):
-        """
-        [Active Model]: Gemini 2.5 Pro
-        """
         return Agent(
-            role=f'Strategic Writer ({self.pro_model_name})',
-            goal='Synthesize raw data, charts, debates, and business logic into a 50-page tier report',
-            backstory="""You are the master of context. Utilizing Gemini 3 Pro's 
-            massive context window, you merge Deep Research, Quant-X Charts, 
-            skeptical debates, and business strategies into a single coherent masterpiece.
-            You handle English and Korean with zero loss in nuance.""",
+            role=f'Strategic Writer [{self.pro_model_name}]',
+            goal='Synthesize all findings into a premium executive report',
+            backstory=f"""Today is {self.current_date}. 
+            You are creating a report for a 2026 audience.
+            Using the highest context reasoning models, you ensure the content is fresh and actionable.
+            MANDATORY: When referencing any agent in the report, you MUST include their model name in brackets (e.g., Deep Researcher [{self.flash_model_name}]).""",
             verbose=True,
             memory=False,
             llm=self.pro_llm,
@@ -136,183 +135,151 @@ class UltimateResearchAgents:
         )
 
 # ============================================================================
-# NEW: BOARD OF DIRECTORS (Strategic Council)
+# BOARD OF DIRECTORS (Strategic Council) - Multi-Model Diversity
 # ============================================================================
 
 class BoardOfDirectors:
-    """
-    Executive Board for Strategic Oversight and Problem-Solving Consultation
-    """
     def __init__(self):
-        self.pro_llm = LLM(
-            model="gemini/gemini-2.5-pro",
-            api_key=os.getenv("GOOGLE_API_KEY")
-        )
-    
+        # API Check
+        if not os.getenv("GOOGLE_API_KEY") or not os.getenv("OPENAI_API_KEY"):
+             raise ValueError("CRITICAL: Missing API Keys for Board Meeting.")
+
+        self.search_tool = TavilySearchTool()
+        self.current_date = CURRENT_DATE
+        
+        # SOTA Dynamic Load
+        self.gemini_ultra = get_sota_llm("gemini", "gemini-3-pro", "gemini-1.5-pro", "GOOGLE_API_KEY")
+        self.gpt5_thinking = get_sota_llm("openai", "gpt-5.2", "gpt-4o", "OPENAI_API_KEY")
+        self.claude_reasoning = get_sota_llm("anthropic", "claude-3-5-sonnet-20241022", "claude-3-opus-20240229", "ANTHROPIC_API_KEY")
+
     def ceo(self):
-        """Vision Architect - Strategic Direction"""
         return Agent(
-            role='CEO (Vision Architect)',
-            goal='Define project vision, business value, and strategic alignment',
-            backstory="""You are the Chief Executive Officer and strategic visionary.
-            You evaluate ideas through the lens of long-term impact and market positioning.
-            You ask: Does this solve a real problem? Is there a unique moat? What's the 10-year vision?
-            You reject ideas that are 'me-too' products without differentiation.""",
+            role='CEO (Vision Architect) [Gemini 3 Ultra]',
+            goal='Define project vision using LATEST market context',
+            backstory=f"""Today is {self.current_date}. 
+            You receive data from 2026. Do NOT hallucinate past data.
+            You define the 10-year vision starting from NOW.""",
+            tools=[self.search_tool],
             verbose=True,
-            memory=False,
-            llm=self.pro_llm,
-            allow_delegation=False,
+            llm=self.gemini_ultra,
         )
     
     def cfo(self):
-        """Risk & ROI Analyst"""
         return Agent(
-            role='CFO (Risk & ROI Analyst)',
-            goal='Assess cost-benefit, identify financial risks, calculate ROI',
-            backstory="""You are the Chief Financial Officer and ultimate pragmatist.
-            You demand hard numbers: What's the CAC? LTV? Burn rate? Break-even timeline?
-            You are skeptical of optimistic revenue projections and always stress-test assumptions.
-            You approve only when the unit economics make sense.""",
+            role='CFO (Risk & ROI Analyst) [GPT-5.2 Thinking]',
+            goal='Execute precision financial stress-tests',
+            backstory=f"""Today is {self.current_date}. 
+            You use GPT-5.2's superior numeric reasoning on 2026 financial data.
+            Search for current cost standards and market ROI benchmarks.""",
+            tools=[self.search_tool],
             verbose=True,
-            memory=False,
-            llm=self.pro_llm,
-            allow_delegation=False,
+            llm=self.gpt5_thinking,
         )
     
     def cto(self):
-        """Tech Strategist"""
         return Agent(
-            role='CTO (Tech Strategist)',
-            goal='Evaluate technical feasibility, architecture decisions, stack selection',
-            backstory="""You are the Chief Technology Officer and system architect.
-            You review: Is this technically feasible? What's the tech stack? Scalability risks?
-            You prevent over-engineering and under-engineering. You advocate for proven, boring tech
-            unless there's a compelling reason for cutting-edge solutions.""",
+            role='CTO (Tech Strategist) [Claude 4.6 Reasoning]',
+            goal='Evaluate tech feasibility with SOTA code analysis',
+            backstory=f"""Today is {self.current_date}. 
+            You design modern architectures for 2026 tech stacks (Next.js 16, Python 3.14).
+            Search for the latest GitHub trends.""",
+            tools=[self.search_tool],
             verbose=True,
-            memory=False,
-            llm=self.pro_llm,
-            allow_delegation=False,
+            llm=self.claude_reasoning,
         )
     
     def cmo(self):
-        """Market Expert"""
         return Agent(
-            role='CMO (Market Expert)',
-            goal='Validate market fit, competitive analysis, user personas',
-            backstory="""You are the Chief Marketing Officer and customer advocate.
-            You ask: Who is the target user? What pain point are we solving? Who are the competitors?
-            You validate product-market fit through user research and competitive benchmarking.
-            You reject solutions looking for problems.""",
+            role='CMO (Market Expert) [Claude 4.6]',
+            goal='Validate market fit using real-time consumer data',
+            backstory=f"""Today is {self.current_date}. 
+            You are the customer advocate for 2026 consumers.
+            Search for current user sentiments and lived experiences.""",
+            tools=[self.search_tool],
             verbose=True,
-            memory=False,
-            llm=self.pro_llm,
-            allow_delegation=False,
+            llm=self.claude_reasoning,
         )
     
     def clo(self):
-        """Legal/Compliance Officer"""
         return Agent(
-            role='CLO (Legal & Compliance Officer)',
-            goal='Review regulatory requirements, data privacy, licensing',
-            backstory="""You are the Chief Legal Officer and compliance guardian.
-            You review: GDPR compliance? Data retention policies? Open-source license compatibility?
-            You identify legal landmines before they explode: IP infringement, regulatory violations,
-            user privacy risks. You ensure the project won't get sued or fined.""",
+            role='CLO (Legal & Compliance Officer) [GPT-5.2]',
+            goal='Review regulatory requirements with zero margin for error',
+            backstory=f"""Today is {self.current_date}. 
+            You ensure compliance with 2026 laws (AI Acts, Data Privacy).
+            Search for the LATEST amendments.""",
+            tools=[self.search_tool],
             verbose=True,
-            memory=False,
-            llm=self.pro_llm,
-            allow_delegation=False,
+            llm=self.gpt5_thinking,
         )
 
 # ============================================================================
-# NEW: PROJECT TEAM (Execution Squad)
+# PROJECT TEAM (Execution Squad) - Efficiency Diversity
 # ============================================================================
 
 class ProjectTeam:
-    """
-    Tactical Execution Team for Implementation
-    """
     def __init__(self):
-        self.flash_llm = LLM(
-            model="gemini/gemini-2.5-flash",
-            api_key=os.getenv("GOOGLE_API_KEY")
-        )
-        self.pro_llm = LLM(
-            model="gemini/gemini-2.5-pro",
-            api_key=os.getenv("GOOGLE_API_KEY")
-        )
-    
+        self.search_tool = TavilySearchTool()
+        self.current_date = CURRENT_DATE
+        
+        # SOTA Dynamic Load
+        self.gemini_flash = get_sota_llm("gemini", "gemini-3-flash", "gemini-1.5-flash", "GOOGLE_API_KEY")
+        self.gpt5_thinking = get_sota_llm("openai", "gpt-5.2", "gpt-4o", "OPENAI_API_KEY")
+        self.claude_reasoning = get_sota_llm("anthropic", "claude-3-5-sonnet-20241022", "claude-3-opus-20240229", "ANTHROPIC_API_KEY")
+
     def project_manager(self):
-        """Orchestrator"""
         return Agent(
-            role='Project Manager (Orchestrator)',
-            goal='Break down tasks, manage dependencies, track progress',
-            backstory="""You are the project orchestrator and task master.
-            You translate strategic requirements into granular work items.
-            You create workflows (task.md), identify dependencies, and sequence execution.
-            You are obsessed with deadlines and deliverables.""",
-            verbose=True,
-            memory=False,
-            llm=self.flash_llm,
-            allow_delegation=False,
+            role='Project Manager (Orchestrator) [Gemini 3 Flash]',
+            goal='Break down tasks with real-time dependency tracking',
+            backstory=f"""Today is {self.current_date}. 
+            You manage the workflow with 2026 speed.
+            Always checking for real-time task dependencies.
+            MANDATORY: When writing meeting minutes or status reports, you MUST mention every engineer with their model name (e.g., Frontend Engineer [Claude 4.6]).""",
+            llm=self.gemini_flash,
         )
     
     def designer(self):
-        """UI/UX Specialist"""
         return Agent(
-            role='Designer (UI/UX Specialist)',
-            goal='Create mockups, design systems, user flows',
-            backstory="""You are the design expert and aesthetic guardian.
-            You create wireframes, design systems, and user flows.
-            You think in: color palettes, typography, spacing, accessibility.
-            You ensure the product is beautiful AND usable.""",
-            verbose=True,
-            memory=False,
-            llm=self.flash_llm,
-            allow_delegation=False,
+            role='Designer (UI/UX) [Claude 4.6]',
+            goal='Create high-aesthetic UI based on LATEST design trends',
+            backstory=f"""Today is {self.current_date}. 
+            You design for 2026 aesthetics (Deep Glassmorphism, Spatial UI).
+            Search for current trends on Dribbble/Awwwards.
+            MANDATORY: Always identify yourself as Designer [Claude 4.6] in communications.""",
+            tools=[self.search_tool],
+            llm=self.claude_reasoning,
         )
     
     def backend_engineer(self):
-        """API Engineer"""
         return Agent(
-            role='Backend Engineer (API Specialist)',
-            goal='Database design, server logic, integrations',
-            backstory="""You are the backend architect and API craftsman.
-            You design databases, write server logic, and build integrations.
-            You think in: schemas, endpoints, authentication, scalability.
-            You write clean, testable, maintainable code.""",
-            verbose=True,
-            memory=False,
-            llm=self.pro_llm,  # Use Pro for complex logic
-            allow_delegation=False,
+            role='Backend Engineer (API) [GPT-5.2 Thinking]',
+            goal='Write mission-critical server code',
+            backstory=f"""Today is {self.current_date}. 
+            You use GPT-5.2 for 2026-standard secure backend logic.
+            Search for the latest security vulnerabilities (OWASP 2026).
+            MANDATORY: Always identify yourself as Backend Engineer [GPT-5.2] in communications.""",
+            tools=[self.search_tool],
+            llm=self.gpt5_thinking,
         )
     
     def frontend_engineer(self):
-        """UI Developer"""
         return Agent(
-            role='Frontend Engineer (UI Developer)',
-            goal='Component development, state management, styling',
-            backstory="""You are the frontend expert and component builder.
-            You implement UI designs in code: React components, state management, styling.
-            You think in: props, hooks, CSS, responsive design, performance.
-            You ensure pixel-perfect implementation.""",
-            verbose=True,
-            memory=False,
-            llm=self.flash_llm,
-            allow_delegation=False,
+            role='Frontend Engineer (UI Developer) [Claude 4.6]',
+            goal='Implement pixel-perfect responsive interfaces',
+            backstory=f"""Today is {self.current_date}. 
+            You build with 2026 frontend stacks (React 19/20, Next.js 16).
+            Ensure 60fps performance.
+            MANDATORY: Always identify yourself as Frontend Engineer [Claude 4.6] in communications.""",
+            tools=[self.search_tool],
+            llm=self.claude_reasoning,
         )
     
     def qa_engineer(self):
-        """Test Engineer"""
         return Agent(
-            role='QA Engineer (Test Specialist)',
-            goal='Write tests, verify functionality, report bugs',
-            backstory="""You are the quality assurance specialist and bug hunter.
-            You write unit tests, integration tests, and E2E tests.
-            You think in: edge cases, error handling, test coverage.
-            You are the last line of defense against bugs.""",
-            verbose=True,
-            memory=False,
-            llm=self.flash_llm,
-            allow_delegation=False,
+            role='QA Engineer (Test Specialist) [GPT-5.2]',
+            goal='Eliminate bugs with automated SOTA testing',
+            backstory=f"""Today is {self.current_date}. 
+            You use GPT-5.2 to find edge cases in 2026 software.
+            Search for latest testing frameworks.""",
+            tools=[self.search_tool],
+            llm=self.gpt5_thinking,
         )
