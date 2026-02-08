@@ -1,6 +1,8 @@
 import os
-from dotenv import load_dotenv
-load_dotenv() # Load actual API keys from .env file
+from pathlib import Path
+# Find .env in the current script's directory
+env_path = Path(__file__).resolve().parent / ".env"
+load_dotenv(dotenv_path=env_path)
 
 from crewai import Agent, LLM
 from crewai_tools import TavilySearchTool
