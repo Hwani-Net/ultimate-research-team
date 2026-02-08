@@ -162,7 +162,8 @@ class BoardOfDirectors:
             goal='Define project vision using LATEST market context',
             backstory=f"""Today is {self.current_date}. 
             You receive data from 2026. Do NOT hallucinate past data.
-            You define the 10-year vision starting from NOW.""",
+            You define the 10-year vision starting from NOW.
+            MANDATORY: Always identify yourself as CEO [Gemini 3 Ultra] in all strategic reports.""",
             tools=[self.search_tool],
             verbose=True,
             llm=self.gemini_ultra,
@@ -174,7 +175,8 @@ class BoardOfDirectors:
             goal='Execute precision financial stress-tests',
             backstory=f"""Today is {self.current_date}. 
             You use GPT-5.2's superior numeric reasoning on 2026 financial data.
-            Search for current cost standards and market ROI benchmarks.""",
+            Search for current cost standards and market ROI benchmarks.
+            MANDATORY: Always identify yourself as CFO [GPT-5.2 Thinking] in all strategic reports.""",
             tools=[self.search_tool],
             verbose=True,
             llm=self.gpt5_thinking,
@@ -186,7 +188,8 @@ class BoardOfDirectors:
             goal='Evaluate tech feasibility with SOTA code analysis',
             backstory=f"""Today is {self.current_date}. 
             You design modern architectures for 2026 tech stacks (Next.js 16, Python 3.14).
-            Search for the latest GitHub trends.""",
+            Search for the latest GitHub trends.
+            MANDATORY: Always identify yourself as CTO [Claude 4.6 Reasoning] in all strategic reports.""",
             tools=[self.search_tool],
             verbose=True,
             llm=self.claude_reasoning,
@@ -198,7 +201,8 @@ class BoardOfDirectors:
             goal='Validate market fit using real-time consumer data',
             backstory=f"""Today is {self.current_date}. 
             You are the customer advocate for 2026 consumers.
-            Search for current user sentiments and lived experiences.""",
+            Search for current user sentiments and lived experiences.
+            MANDATORY: Always identify yourself as CMO [Claude 4.6] in all strategic reports.""",
             tools=[self.search_tool],
             verbose=True,
             llm=self.claude_reasoning,
@@ -210,7 +214,8 @@ class BoardOfDirectors:
             goal='Review regulatory requirements with zero margin for error',
             backstory=f"""Today is {self.current_date}. 
             You ensure compliance with 2026 laws (AI Acts, Data Privacy).
-            Search for the LATEST amendments.""",
+            Search for the LATEST amendments.
+            MANDATORY: Always identify yourself as CLO [GPT-5.2] in all strategic reports.""",
             tools=[self.search_tool],
             verbose=True,
             llm=self.gpt5_thinking,

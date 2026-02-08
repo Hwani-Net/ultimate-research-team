@@ -942,7 +942,7 @@ with col_left:
             # --- 3-Agent Prompt (Lightweight) ---
             if "3-Agent" in mode:
                 prompt = f"""
-                [Project: Antigravity v11.2 | Role: Research Efficiency Expert]
+                [Project: Antigravity v11.4 | Role: Research Efficiency Expert]
                 You are managing a lean 3-agent team (Researcher, Critic, Writer).
                 Transform the user's input into a concise, fact-focused research brief.
 
@@ -970,7 +970,7 @@ with col_left:
             # --- 5-Agent Prompt (Heavyweight) ---
             else:
                 prompt = f"""
-                [Project: Antigravity v11.2 | Role: Chief Strategy Architect]
+                [Project: Antigravity v11.4 | Role: Chief Strategy Architect]
                 You are the "Brain" of an autonomous 5-agent AI team (Researcher, Analyst, Skeptic, Strategist, Writer).
                 Your mission is to transform the user's raw, vague input into a **Battle-Ready Strategic Work Order**.
                 
