@@ -55,6 +55,20 @@ if sys.platform != "win32":
         time.tzset()
     except Exception:
         pass
+
+# --- LOG CLEANER (Silence Non-Critical Warnings) ---
+import logging
+# Filter out "missing ScriptRunContext" warning from Streamlit
+class NoContextFilter(logging.Filter):
+    def filter(self, record):
+        return "missing ScriptRunContext" not in record.getMessage()
+
+logging.getLogger("streamlit").addFilter(NoContextFilter())
+logging.getLogger("streamlit.runtime.scriptrunner.script_run_context").addFilter(NoContextFilter())
+# Silence CrewAI EventBus errors that are non-blocking
+logging.getLogger("crewai.telemetry").setLevel(logging.CRITICAL)
+# ---------------------------------------------------
+
 from agents import UltimateResearchAgents
 from tasks import UltimateResearchTasks
 from dotenv import load_dotenv
