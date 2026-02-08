@@ -8,6 +8,23 @@ os.environ["CREWAI_DISABLE_TELEMETRY"] = "1"
 os.environ["LITELLM_MODE"] = "PRODUCTION"
 
 import sys
+import subprocess
+
+# --- EMERGENCY DEPENDENCY PATCH ---
+def ensure_dependencies():
+    try:
+        import tavily
+    except ImportError:
+        print("🔧 [PATCH] Installing missing tavily-python dependency...")
+        try:
+            subprocess.check_call([sys.executable, "-m", "pip", "install", "tavily-python"])
+            print("✅ [PATCH] tavily-python installed.")
+        except Exception as e:
+            print(f"❌ [PATCH] Failed to install tavily-python: {e}")
+
+ensure_dependencies()
+# ----------------------------------
+
 import contextlib
 import io
 import re
