@@ -151,6 +151,10 @@ html, body, [class*="css"] {{
     box-shadow: 10px 0 30px rgba(0, 0, 0, 0.05);
 }}
 
+[data-testid="stSidebarUserContent"] {{
+    padding-bottom: 100px !important;
+}}
+
 [data-testid="stSidebar"] * {{
     color: var(--text-color) !important;
 }}
