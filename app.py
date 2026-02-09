@@ -80,60 +80,64 @@ with st.sidebar:
 
 # Define Theme Palettes
 if st.session_state.theme == 'Dark':
-    primary_gradient = "linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%)"
-    bg_color = "#05060f"
-    bg_image = """radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0, transparent 50%), 
-                  radial-gradient(at 50% 0%, rgba(168, 85, 247, 0.1) 0, transparent 50%), 
-                  radial-gradient(at 100% 0%, rgba(236, 72, 153, 0.15) 0, transparent 50%)"""
-    text_color = "#f1f5f9"
-    glass_bg = "rgba(13, 14, 22, 0.7)"
+    primary_gradient = "linear-gradient(120deg, #14b8a6 0%, #f97316 60%, #f59e0b 100%)"
+    bg_color = "#0b0f14"
+    bg_image = """radial-gradient(at 0% 0%, rgba(20, 184, 166, 0.22) 0, transparent 55%),
+                  radial-gradient(at 100% 0%, rgba(249, 115, 22, 0.18) 0, transparent 55%),
+                  radial-gradient(at 50% 100%, rgba(245, 158, 11, 0.15) 0, transparent 60%)"""
+    text_color = "#e7edf2"
+    glass_bg = "rgba(16, 24, 32, 0.72)"
     glass_border = "rgba(255, 255, 255, 0.08)"
     # Use background property for gradient
     sidebar_css = """
-        background: linear-gradient(180deg, 
-        rgba(10, 11, 20, 0.98) 0%, 
-        rgba(20, 15, 45, 0.95) 50%,
-        rgba(10, 11, 20, 0.98) 100%) !important;
+        background: linear-gradient(180deg,
+        rgba(9, 13, 19, 0.98) 0%,
+        rgba(14, 26, 33, 0.96) 50%,
+        rgba(9, 13, 19, 0.98) 100%) !important;
     """
-    console_bg = "rgba(0, 0, 0, 0.8)"
-    console_text = "#5eead4"
-    report_bg = "rgba(255, 255, 255, 0.02)"
+    console_bg = "rgba(6, 12, 18, 0.92)"
+    console_text = "#7dd3fc"
+    report_bg = "rgba(255, 255, 255, 0.03)"
     
 else:  # Light Mode (High Readability)
-    primary_gradient = "linear-gradient(135deg, #4f46e5 0%, #9333ea 50%, #db2777 100%)" # Slightly darker for contrast
-    bg_color = "#f8fafc" # Slate 50
-    bg_image = """radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.05) 0, transparent 50%), 
-                  radial-gradient(at 100% 0%, rgba(236, 72, 153, 0.05) 0, transparent 50%)"""
-    text_color = "#1e293b" # Slate 800
-    glass_bg = "rgba(255, 255, 255, 0.75)"
-    glass_border = "rgba(0, 0, 0, 0.15)" # Slightly darker border for visibility
+    primary_gradient = "linear-gradient(120deg, #0ea5a4 0%, #f97316 60%, #f59e0b 100%)"
+    bg_color = "#f7f4ef"
+    bg_image = """radial-gradient(at 0% 0%, rgba(14, 165, 164, 0.12) 0, transparent 55%),
+                  radial-gradient(at 100% 0%, rgba(249, 115, 22, 0.12) 0, transparent 55%),
+                  radial-gradient(at 50% 100%, rgba(245, 158, 11, 0.08) 0, transparent 60%)"""
+    text_color = "#1b1f24"
+    glass_bg = "rgba(255, 255, 255, 0.82)"
+    glass_border = "rgba(9, 13, 20, 0.14)"
     # Use background-color and remove background-image
     sidebar_css = """
-        background-color: #ffffff !important;
+        background: linear-gradient(180deg, #fff7ee 0%, #f1f5f9 100%) !important;
         background-image: none !important;
     """
-    console_bg = "#1e1e1e" # Keep console dark for code readability
+    console_bg = "#0b1220"
     console_text = "#a5f3fc"
-    report_bg = "rgba(255, 255, 255, 0.6)"
+    report_bg = "rgba(255, 255, 255, 0.72)"
 
 st.markdown(f"""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@300;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=Manrope:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap');
 
 :root {{
     --primary-gradient: {primary_gradient};
     --glass-bg: {glass_bg};
     --glass-border: {glass_border};
-    --accent-glow: 0 0 20px rgba(139, 92, 246, 0.3);
+    --accent-glow: 0 0 24px rgba(20, 184, 166, 0.35);
     --text-color: {text_color};
     --console-bg: {console_bg};
     --console-text: {console_text};
     --report-bg: {report_bg};
+    --brand-1: #14b8a6;
+    --brand-2: #f97316;
+    --brand-3: #f59e0b;
 }}
 
 /* Global Text Reset - Aggressive */
 html, body, [class*="css"] {{
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Manrope', sans-serif;
     color: var(--text-color) !important;
 }}
 
@@ -142,13 +146,61 @@ html, body, [class*="css"] {{
     background-color: {bg_color};
     background-image: {bg_image};
     background-attachment: fixed;
+    animation: page-in 0.6s ease-out;
+}}
+
+.block-container {{
+    padding-top: 2.2rem !important;
+    padding-bottom: 3rem !important;
+}}
+
+/* Column Layout Smoothing */
+[data-testid="stHorizontalBlock"] {{
+    gap: 14px;
+    align-items: stretch;
+}}
+
+[data-testid="stVerticalBlockBorderWrapper"] {{
+    height: 100%;
+}}
+
+.panel-body {{
+    min-height: 560px;
+    padding: 0;
+}}
+
+.panel-body .console-box {{
+    height: 560px;
+    margin: 0;
+    border-radius: 16px;
+}}
+
+.panel-live {{
+    margin-top: -10px;
+}}
+
+.panel-live .console-box {{
+    height: 570px;
+}}
+
+.panel-compact {{
+    min-height: 360px;
+}}
+
+.panel-compact .stTextArea textarea {{
+    min-height: 140px;
+}}
+
+::selection {{
+    background: rgba(249, 115, 22, 0.35);
+    color: #0b0f14;
 }}
 
 /* Sidebar - Force Override */
 [data-testid="stSidebar"] {{
     {sidebar_css}
     border-right: 1px solid var(--glass-border);
-    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.05);
+    box-shadow: 12px 0 40px rgba(0, 0, 0, 0.08);
 }}
 
 [data-testid="stSidebarUserContent"] {{
@@ -167,22 +219,28 @@ html, body, [class*="css"] {{
 }}
 
 h1, h2, h3, h4, h5, h6 {{
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Fraunces', serif;
     color: var(--text-color) !important;
     font-weight: 800 !important;
     letter-spacing: -0.5px;
 }}
 
 /* Glass Cards */
-.glass-card {{
+div[data-testid="stVerticalBlockBorderWrapper"] {{
     background: var(--glass-bg);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
-    border-radius: 24px;
-    padding: 28px;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 22px;
+    padding: 24px 26px;
     margin-bottom: 24px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 12px 32px rgba(10, 20, 30, 0.16);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}}
+
+div[data-testid="stVerticalBlockBorderWrapper"]:hover {{
+    transform: translateY(-4px);
+    box-shadow: 0 16px 36px rgba(10, 20, 30, 0.22);
 }}
 
 /* Buttons */
@@ -194,12 +252,13 @@ h1, h2, h3, h4, h5, h6 {{
     color: white !important;
     font-weight: 700;
     border: none;
-    transition: transform 0.2s;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.18);
 }}
 
 .stButton > button:hover {{
     transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 16px 30px rgba(15, 23, 42, 0.22);
     color: white !important;
 }}
 
@@ -235,7 +294,7 @@ h1, h2, h3, h4, h5, h6 {{
 
 [data-testid="stCode"] code {{
     background-color: transparent !important;
-    font-family: 'JetBrains Mono', monospace !important;
+    font-family: 'Space Mono', monospace !important;
     color: var(--console-text) !important; /* Force text color */
 }}
 
@@ -248,13 +307,13 @@ h1, h2, h3, h4, h5, h6 {{
 .console-box {{
     background-color: {console_bg};
     color: {console_text} !important;
-    padding: 20px;
+    padding: 18px 18px;
     border-radius: 16px;
-    font-family: 'JetBrains Mono', monospace;
-    height: 500px;
+    font-family: 'Space Mono', monospace;
+    height: 560px;
     overflow-y: auto;
     font-size: 0.85em;
-    border: 1px solid rgba(139, 92, 246, 0.2);
+    border: 1px solid rgba(20, 184, 166, 0.2);
 }}
 
 /* Report Card */
@@ -299,7 +358,7 @@ h1, h2, h3, h4, h5, h6 {{
 
 /* Links */
 a {{
-    color: #8b5cf6 !important;
+    color: #0ea5a4 !important;
     text-decoration: none;
     font-weight: 600;
 }}
@@ -323,7 +382,7 @@ a {{
 .badge-opus {{ color: #f87171; border-color: rgba(248, 113, 113, 0.3); background: rgba(248, 113, 113, 0.1); }}
 
 .status-banner {{
-    background: linear-gradient(90deg, rgba(99, 102, 241, 0.2), rgba(236, 72, 153, 0.2));
+    background: linear-gradient(90deg, rgba(20, 184, 166, 0.2), rgba(249, 115, 22, 0.2));
     border: 1px solid var(--glass-border);
     padding: 10px 20px;
     border-radius: 12px;
@@ -442,11 +501,22 @@ label[data-baseweb="radio"] div {{
 /* Custom Scrollbar */
 ::-webkit-scrollbar {{ width: 8px; }}
 ::-webkit-scrollbar-track {{ background: transparent; }}
-::-webkit-scrollbar-thumb {{ 
-    background: rgba(139, 92, 246, 0.3); 
+::-webkit-scrollbar-thumb {{
+    background: rgba(20, 184, 166, 0.35); 
     border-radius: 10px; 
 }}
-::-webkit-scrollbar-thumb:hover {{ background: rgba(139, 92, 246, 0.5); }}
+::-webkit-scrollbar-thumb:hover {{ background: rgba(20, 184, 166, 0.6); }}
+
+@keyframes page-in {{
+    from {{ opacity: 0; transform: translateY(12px); }}
+    to {{ opacity: 1; transform: translateY(0); }}
+}}
+
+@keyframes pulse-glow {{
+    0% {{ box-shadow: 0 0 0 rgba(20, 184, 166, 0.0); }}
+    50% {{ box-shadow: 0 0 18px rgba(20, 184, 166, 0.25); }}
+    100% {{ box-shadow: 0 0 0 rgba(20, 184, 166, 0.0); }}
+}}
 </style>
 """, unsafe_allow_html=True)
 
@@ -1031,21 +1101,18 @@ with st.sidebar:
         st.rerun()
 
 # Main Layout
-st.markdown('<h1 style="text-align: center; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 3.5em; margin-bottom: 0.1em; font-family: \'Space Grotesk\', sans-serif;">ULTIMATE RESEARCH TEAM</h1>', unsafe_allow_html=True)
+st.markdown('<h1 style="text-align: center; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 3.5em; margin-bottom: 0.1em; font-family: \'Fraunces\', serif;">ULTIMATE RESEARCH TEAM</h1>', unsafe_allow_html=True)
 st.markdown('<div class="status-banner">⚙️ [ANTIGRAVITY] ULTIMATE SOULLESS MODE v11.5 ACTIVATED | PRECISION: 99.9%</div>', unsafe_allow_html=True)
 
 # 🏆 최상단 핵심 프롬프트 배치 (User Request: 한 번에 때려 부을 수 있게)
-with st.container():
-    st.markdown('<div class="glass-card">', unsafe_allow_html=True)
+with st.container(border=True):
     st.markdown("### 🚀 Antigravity Bootloader (v11.5)")
     st.markdown("이제 별도의 명령어 대신, **왼쪽 사이드바의 [복사용] 궁극의 사골 프롬프트 v11.5**를 복사해서 붙여넣으세요.")
     st.info("💡 v11.5는 '스마트 감지' 기능이 탑재되어, 신규/기존 프로젝트를 스스로 판단합니다.")
-    st.markdown('</div>', unsafe_allow_html=True)
 
-col_left, col_mid, col_right = st.columns([1, 1.5, 1.5])
+col_req, col_mode, col_live = st.columns([1.1, 1.35, 1.35])
 
-with col_left:
-    st.markdown('<div class="glass-card">', unsafe_allow_html=True)
+with col_req:
     # --- Magic Prompt Optimizer Logic ---
     # --- Magic Prompt Optimizer Logic ---
     def generate_refined_prompt(raw_topic, mode="Deep Strategy (5-Agent)"):
@@ -1134,198 +1201,190 @@ with col_left:
             return raw_topic
 
     # --- UI Layout ---
-    st.markdown('<div class="glass-card">', unsafe_allow_html=True)
-    st.markdown("### 📥 Research Request")
+    with st.container(border=True):
+        st.markdown("### 📥 Research Request")
+        st.markdown('<div class="panel-compact">', unsafe_allow_html=True)
     
-    # Callback to sync template to text area
-    def sync_template():
-        sel = st.session_state.get('template_selection')
-        if sel == "💰 VC 투자 심의 (Investment Memo)":
-            st.session_state.research_input_area = "[대상 기업/기술]에 대한 투자 심의 보고서를 작성해줘. 시장성(TAM/SAM/SOM), 기술적 해자(Moat), 경쟁사 현황, 그리고 Exit 시나리오(M&A/IPO)를 포함해야 해."
-        elif sel == "⚔️ 경쟁사 심층 해부 (Competitor Deep Dive)":
-            st.session_state.research_input_area = "[나의 서비스]와 경쟁하는 Top 3 경쟁사([A], [B], [C])의 기능을 1:1로 비교하고, 그들의 숨겨진 약점과 우리가 파고들 수 있는 니치(Niche) 시장을 분석해줘."
-        elif sel == "🌍 글로벌 GTM 전략 (Market Entry)":
-            st.session_state.research_input_area = "2026년 [타겟 국가] 시장에 진출하기 위한 Go-To-Market 전략을 수립해줘. 현지 규제 장벽, 문화적 차이, 초기 마케팅 채널, 그리고 1년차 예상 KPI를 포함해."
-        elif sel == "🚨 위기 관리 & 리스크 워게임 (Risk Mgt)":
-            st.session_state.research_input_area = "[상황/이슈]가 발생했을 때의 최악의 시나리오(Worst-case)를 시뮬레이션하고, 법적/홍보적 대응 매뉴얼과 리스크 미티게이션(Mitigation) 플랜을 짜줘."
-        elif sel == "🛠️ 신제품 기획 & PMF 검증 (Product Strategy)":
-            st.session_state.research_input_area = "2026년 트렌드를 반영한 [신제품 아이디어]의 PMF(Product-Market Fit)를 검증해줘. 타겟 페르소나의 Pain Point, 예상되는 차별화 요소, 그리고 검증을 위한 MVP 스펙을 정의해."
+        # Callback to sync template to text area
+        def sync_template():
+            sel = st.session_state.get('template_selection')
+            if sel == "💰 VC 투자 심의 (Investment Memo)":
+                st.session_state.research_input_area = "[대상 기업/기술]에 대한 투자 심의 보고서를 작성해줘. 시장성(TAM/SAM/SOM), 기술적 해자(Moat), 경쟁사 현황, 그리고 Exit 시나리오(M&A/IPO)를 포함해야 해."
+            elif sel == "⚔️ 경쟁사 심층 해부 (Competitor Deep Dive)":
+                st.session_state.research_input_area = "[나의 서비스]와 경쟁하는 Top 3 경쟁사([A], [B], [C])의 기능을 1:1로 비교하고, 그들의 숨겨진 약점과 우리가 파고들 수 있는 니치(Niche) 시장을 분석해줘."
+            elif sel == "🌍 글로벌 GTM 전략 (Market Entry)":
+                st.session_state.research_input_area = "2026년 [타겟 국가] 시장에 진출하기 위한 Go-To-Market 전략을 수립해줘. 현지 규제 장벽, 문화적 차이, 초기 마케팅 채널, 그리고 1년차 예상 KPI를 포함해."
+            elif sel == "🚨 위기 관리 & 리스크 워게임 (Risk Mgt)":
+                st.session_state.research_input_area = "[상황/이슈]가 발생했을 때의 최악의 시나리오(Worst-case)를 시뮬레이션하고, 법적/홍보적 대응 매뉴얼과 리스크 미티게이션(Mitigation) 플랜을 짜줘."
+            elif sel == "🛠️ 신제품 기획 & PMF 검증 (Product Strategy)":
+                st.session_state.research_input_area = "2026년 트렌드를 반영한 [신제품 아이디어]의 PMF(Product-Market Fit)를 검증해줘. 타겟 페르소나의 Pain Point, 예상되는 차별화 요소, 그리고 검증을 위한 MVP 스펙을 정의해."
 
-    # Advanced Strategy Templates
-    st.selectbox("🎯 Strategic Templates (Expert Mode):", 
-                ["직접 입력 (Custom)", 
-                 "💰 VC 투자 심의 (Investment Memo)", 
-                 "⚔️ 경쟁사 심층 해부 (Competitor Deep Dive)",
-                 "🌍 글로벌 GTM 전략 (Market Entry)",
-                 "🚨 위기 관리 & 리스크 워게임 (Risk Mgt)",
-                 "🛠️ 신제품 기획 & PMF 검증 (Product Strategy)"],
-                key="template_selection",
-                on_change=sync_template)
+        # Advanced Strategy Templates
+        st.selectbox("🎯 Strategic Templates (Expert Mode):", 
+                    ["직접 입력 (Custom)", 
+                     "💰 VC 투자 심의 (Investment Memo)", 
+                     "⚔️ 경쟁사 심층 해부 (Competitor Deep Dive)",
+                     "🌍 글로벌 GTM 전략 (Market Entry)",
+                     "🚨 위기 관리 & 리스크 워게임 (Risk Mgt)",
+                     "🛠️ 신제품 기획 & PMF 검증 (Product Strategy)"],
+                    key="template_selection",
+                    on_change=sync_template)
     
-    user_input = st.text_area("연구 주제 (초안):", 
-                             placeholder="연구할 내용을 입력하세요... (예: 2026 AI 에이전트 시장 전망)",
-                             height=150,
-                             key="research_input_area")
+        user_input = st.text_area("연구 주제 (초안):", 
+                                 placeholder="연구할 내용을 입력하세요... (예: 2026 AI 에이전트 시장 전망)",
+                                 height=150,
+                                 key="research_input_area")
     
-    # Update session state for internal logic compat
-    st.session_state.research_input = user_input
+        # Update session state for internal logic compat
+        st.session_state.research_input = user_input
+        st.markdown('</div>', unsafe_allow_html=True)
 
-    # Research Mode Selection
-    st.markdown("---")
-    st.markdown("### 🧬 Research Mode")
+        current_mode = st.session_state.get('research_mode_selection_radio', "Deep Strategy (5-Agent)")
+
+        # ✨ Magic Upgrade Logic (Inline Conditional)
+        # [FIX] Replaced st.dialog with inline container to prevent Zombie UI
+        if st.session_state.get('show_upgrade_dialog', False):
+            if not user_input: # Check if user_input is empty
+                 st.warning("먼저 내용을 입력하세요.")
+            else:
+                st.markdown("---")
+                with st.container(border=True):
+                    st.markdown("### ✨ 전문가 프롬프트 리뷰 (Expert Logic)")
+                
+                    if 'refined_prompt_cache' not in st.session_state:
+                        with st.spinner(f"💎 프롬프트를 세공하는 중... ({current_mode})"):
+                            st.session_state.refined_prompt_cache = generate_refined_prompt(user_input, current_mode)
+
+                    refined_text = st.session_state.refined_prompt_cache
+                
+                    st.markdown("AI가 제안하는 전문가급 지시서입니다. 내용을 확인하세요.")
+                    st.text_area("제안된 프롬프트:", value=refined_text, height=300, disabled=True)
+                
+                    col_d1, col_d2 = st.columns(2)
+                    with col_d1:
+                        if st.button("🔄 마음에 안 들어 (다시 작성)", use_container_width=True):
+                            del st.session_state.refined_prompt_cache
+                            st.rerun()
+                
+                    with col_d2:
+                        # Callback for Apply
+                        def on_inline_apply():
+                            st.session_state.research_input = st.session_state.refined_prompt_cache
+                            st.session_state['research_input_area'] = st.session_state.refined_prompt_cache
+                            st.session_state.magic_approved = True
+                            st.session_state['show_upgrade_dialog'] = False
+                    
+                        st.button("✅ 적용하고 연구 시작", type="primary", use_container_width=True, key="btn_apply_magic_inline", on_click=on_inline_apply)
+                st.session_state['show_upgrade_dialog'] = False
     
-    col_mode_1, col_mode_2 = st.columns([2, 1])
+        # Auto-start logic if approved from modal
+        # Auto-start logic if approved from modal
     
-    with col_mode_1:
-        research_mode = st.radio(
-            "Select Team Composition:",
-            ["Speed Briefing (3-Agent)", "Deep Strategy (5-Agent)", "🏛️ Board + Project Team (Dual-Layer)"],
-            index=1,
-            help="3-Agent: Fast, MVP validation. 5-Agent: Board-level Strategy. Board+Project: Full governance system.",
-            key="research_mode_selection_radio"
-        )
+        if st.session_state.get('magic_approved', False):
+            st.session_state.magic_approved = False 
+            st.session_state['research_ready_to_start'] = True
+            st.rerun()
+
+        start_btn = st.session_state.get('research_ready_to_start', False)
+        # Reset trigger after reading is handled in main execution block
+        if start_btn:
+            st.session_state['research_ready_to_start'] = False
+
+        pass
+
+with col_mode:
+    with st.container(border=True):
+        st.markdown("### 🧬 Research Mode")
+        st.markdown('<div class="panel-compact">', unsafe_allow_html=True)
     
-    with col_mode_2:
-        st.markdown("<br>", unsafe_allow_html=True)
-        # Cost Estimator Logic
-        if "3-Agent" in research_mode:
-             st.markdown("💰 **Est. Cost**: `$0.02`")
-             st.caption("⚡ Efficient / Quick")
-        else:
-             st.markdown("💰 **Est. Cost**: `$0.15`")
-             st.caption("💎 Premium / Deep")
+        col_mode_1, col_mode_2 = st.columns([2, 1])
+    
+        with col_mode_1:
+            research_mode = st.radio(
+                "Select Team Composition:",
+                ["Speed Briefing (3-Agent)", "Deep Strategy (5-Agent)", "🏛️ Board + Project Team (Dual-Layer)"],
+                index=1,
+                help="3-Agent: Fast, MVP validation. 5-Agent: Board-level Strategy. Board+Project: Full governance system.",
+                key="research_mode_selection_radio"
+            )
+    
+        with col_mode_2:
+            st.markdown("<br>", unsafe_allow_html=True)
+            # Cost Estimator Logic
+            if "3-Agent" in research_mode:
+                 st.markdown("💰 **Est. Cost**: `$0.02`")
+                 st.caption("⚡ Efficient / Quick")
+            else:
+                 st.markdown("💰 **Est. Cost**: `$0.15`")
+                 st.caption("💎 Premium / Deep")
              
-    # A/B Testing Toggle (Beta)
-    enable_ab_test = st.checkbox("⚖️ Compare Modes (A/B Test) - Beta", 
-                               help="Run BOTH modes simultaneously to compare results. (Double Cost)")
+        # A/B Testing Toggle (Beta)
+        enable_ab_test = st.checkbox("⚖️ Compare Modes (A/B Test) - Beta", 
+                                   help="Run BOTH modes simultaneously to compare results. (Double Cost)")
     
-    st.markdown("---")
+        st.markdown("---")
+        st.markdown("### 🚀 Execution")
 
-    # [RESTORED] Action Buttons (Must be here to access research_mode)
-    col_action_manual, col_action_magic = st.columns([1, 1])
+        # [RESTORED] Action Buttons (Must be here to access research_mode)
+        col_action_manual, col_action_magic = st.columns([1, 1])
     
-    with col_action_manual:
-         if st.button("🚀 바로 연구 시작 (Start Now)", type="primary", use_container_width=True, help="현재 입력된 내용으로 즉시 리서치를 시작합니다."):
-             st.session_state['research_ready_to_start'] = True # Trigger start
-             st.rerun()
+        with col_action_manual:
+             if st.button("🚀 바로 연구 시작 (Start Now)", type="primary", use_container_width=True, help="현재 입력된 내용으로 즉시 리서치를 시작합니다."):
+                 st.session_state['research_ready_to_start'] = True # Trigger start
+                 st.rerun()
 
-    with col_action_magic:
-        if st.button("✨ 전문가로 업그레이드 (Magic)", use_container_width=True, help="Gemini 2.5 Flash가 당신의 짧은 지시를 완벽한 컨설팅 의뢰서로 변환합니다."):
-             st.session_state['show_upgrade_dialog'] = True
-             # Clear cache on new open
-             if 'refined_prompt_cache' in st.session_state:
-                del st.session_state.refined_prompt_cache
+        with col_action_magic:
+            if st.button("✨ 전문가로 업그레이드 (Magic)", use_container_width=True, help="Gemini 2.5 Flash가 당신의 짧은 지시를 완벽한 컨설팅 의뢰서로 변환합니다."):
+                 st.session_state['show_upgrade_dialog'] = True
+                 # Clear cache on new open
+                 if 'refined_prompt_cache' in st.session_state:
+                    del st.session_state.refined_prompt_cache
+        st.markdown('</div>', unsafe_allow_html=True)
 
-    # ✨ Magic Upgrade Logic (Inline Conditional)
-    # [FIX] Replaced st.dialog with inline container to prevent Zombie UI
-    if st.session_state.get('show_upgrade_dialog', False):
-        if not user_input: # Check if user_input is empty
-             st.warning("먼저 내용을 입력하세요.")
-        else:
-            st.markdown("---")
-            with st.container(border=True):
-                st.markdown("### ✨ 전문가 프롬프트 리뷰 (Expert Logic)")
-                
-                if 'refined_prompt_cache' not in st.session_state:
-                    with st.spinner(f"💎 프롬프트를 세공하는 중... ({research_mode})"):
-                        st.session_state.refined_prompt_cache = generate_refined_prompt(user_input, research_mode)
+with col_live:
+    with st.container(border=True):
+        st.markdown("### ⚡ Live Agent Combat")
+        st.markdown('<div class="panel-body panel-live">', unsafe_allow_html=True)
+        log_placeholder = st.empty()
+        log_placeholder.markdown('<div class="console-box">Waiting for new research mission...</div>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
 
-                refined_text = st.session_state.refined_prompt_cache
-                
-                st.markdown("AI가 제안하는 전문가급 지시서입니다. 내용을 확인하세요.")
-                st.text_area("제안된 프롬프트:", value=refined_text, height=300, disabled=True)
-                
-                col_d1, col_d2 = st.columns(2)
-                with col_d1:
-                    if st.button("🔄 마음에 안 들어 (다시 작성)", use_container_width=True):
-                        del st.session_state.refined_prompt_cache
-                        st.rerun()
-                
-                with col_d2:
-                    # Callback for Apply
-                    def on_inline_apply():
-                        st.session_state.research_input = st.session_state.refined_prompt_cache
-                        st.session_state['research_input_area'] = st.session_state.refined_prompt_cache
-                        st.session_state.magic_approved = True
-                        st.session_state['show_upgrade_dialog'] = False
-                    
-                    st.button("✅ 적용하고 연구 시작", type="primary", use_container_width=True, key="btn_apply_magic_inline", on_click=on_inline_apply)
-            st.session_state['show_upgrade_dialog'] = False
+col_report_left, col_report_mid, col_report_right = st.columns([1.1, 1.35, 1.35])
+
+with col_report_right:
+    with st.container(border=True):
+        st.markdown("### 📄 Strategic Report")
+        st.markdown('<div class="panel-body">', unsafe_allow_html=True)
+        report_placeholder = st.empty()
+        st.markdown('</div>', unsafe_allow_html=True)
     
-    st.markdown("### 📸 Multi-modal Vision (Beta)")
-    uploaded_image = st.file_uploader("이미지 분석이 필요하면 업로드하세요 (JPG/PNG)", type=["jpg", "jpeg", "png"])
-    
-    if uploaded_image:
-        st.image(uploaded_image, caption="분석 대상 이미지", use_container_width=True)
-        import base64
-        image_bytes = uploaded_image.getvalue()
-        image_b64 = base64.b64encode(image_bytes).decode('utf-8')
-        st.session_state['uploaded_image_b64'] = image_b64
-    else:
-        st.session_state['uploaded_image_b64'] = None
-    
-    # Auto-start logic if approved from modal
-    # Auto-start logic if approved from modal
-    
-    if st.session_state.get('magic_approved', False):
-        st.session_state.magic_approved = False 
-        st.session_state['research_ready_to_start'] = True
-        st.rerun()
-
-    start_btn = st.session_state.get('research_ready_to_start', False)
-    # Reset trigger after reading is handled in main execution block
-    if start_btn:
-        st.session_state['research_ready_to_start'] = False
-
-
-    
-    st.markdown("""
-    <div style="margin-top: 20px; font-size: 0.9em; color: var(--text-color); font-weight: 500;">
-    <b>💡 Model Recommendation:</b><br>
-    협업의 시작은 <span class="model-badge badge-pro">Gemini 3 Pro (High)</span>에게 이 지시서를 맡기는 것입니다.
-    </div>
-    """, unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
-
-with col_mid:
-    st.markdown('<div class="glass-card" style="height: 100%;">', unsafe_allow_html=True)
-    st.markdown("### ⚡ Live Agent Combat")
-    log_placeholder = st.empty()
-    log_placeholder.markdown('<div class="console-box">Waiting for new research mission...</div>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
-
-with col_right:
-    st.markdown('<div class="glass-card" style="height: 100%;">', unsafe_allow_html=True)
-    st.markdown("### 📄 Strategic Report")
-    report_placeholder = st.empty()
-    
-    if start_btn and st.session_state.get('research_input_area'):
-        # Allow time for the UI to register the click and show the spinner
-        import time
+        if start_btn and st.session_state.get('research_input_area'):
+            # Allow time for the UI to register the click and show the spinner
+            import time
         
-        # Set running state to prevent double execution and track progress
-        st.session_state['is_running'] = True
+            # Set running state to prevent double execution and track progress
+            st.session_state['is_running'] = True
         
-        with st.spinner("🚀 AI 팀이 최신 정보를 분석 중입니다 (수 분이 소요될 수 있습니다)..."):
-            try:
-                # Use value directly from the widget key to avoid sync issues
-                current_topic = st.session_state.research_input_area
-                image_context = st.session_state.get('uploaded_image_b64')
+            with st.spinner("🚀 AI 팀이 최신 정보를 분석 중입니다 (수 분이 소요될 수 있습니다)..."):
+                try:
+                    # Use value directly from the widget key to avoid sync issues
+                    current_topic = st.session_state.research_input_area
+                    image_context = st.session_state.get('uploaded_image_b64')
                 
-                if enable_ab_test:
-                    st.info("⚖️ A/B Testing Enabled: Running BOTH modes sequentially...")
+                    if enable_ab_test:
+                        st.info("⚖️ A/B Testing Enabled: Running BOTH modes sequentially...")
                     
-                    # Run Mode A (3-Agent)
-                    log_placeholder.markdown("### ⚡ Running Mode A: Speed Briefing...")
-                    result_a = run_research(current_topic, log_placeholder, image_context, "Speed Briefing (3-Agent)")
+                        # Run Mode A (3-Agent)
+                        log_placeholder.markdown("### ⚡ Running Mode A: Speed Briefing...")
+                        result_a = run_research(current_topic, log_placeholder, image_context, "Speed Briefing (3-Agent)")
                     
-                    # Run Mode B (5-Agent)
-                    log_placeholder.markdown("### 💎 Running Mode B: Deep Strategy...")
-                    result_b = run_research(current_topic, log_placeholder, image_context, "Deep Strategy (5-Agent)")
+                        # Run Mode B (5-Agent)
+                        log_placeholder.markdown("### 💎 Running Mode B: Deep Strategy...")
+                        result_b = run_research(current_topic, log_placeholder, image_context, "Deep Strategy (5-Agent)")
                     
-                    # Combine Results
-                    now_kst = datetime.datetime.now(KST).strftime("%Y-%m-%d %H:%M")
-                    result = f"""
+                        # Combine Results
+                        now_kst = datetime.datetime.now(KST).strftime("%Y-%m-%d %H:%M")
+                        result = f"""
 # ⚖️ Strategic A/B Test Report
 **Topic**: {current_topic}
 **Date**: {now_kst} (KST)
@@ -1343,30 +1402,30 @@ with col_right:
 > Focus: Investment Defense, ROI, Skepticism
 {result_b}
 """
-                else:
-                    # Check if Board + Project Team mode
-                    if "Board + Project Team" in research_mode:
-                        # Dual-Layer Governance Mode
-                        result = run_board_and_project_team(current_topic, log_placeholder)
                     else:
-                        # Normal Single Mode Run (3-Agent or 5-Agent)
-                        result = run_research(current_topic, log_placeholder, image_context, research_mode)
+                        # Check if Board + Project Team mode
+                        if "Board + Project Team" in research_mode:
+                            # Dual-Layer Governance Mode
+                            result = run_board_and_project_team(current_topic, log_placeholder)
+                        else:
+                            # Normal Single Mode Run (3-Agent or 5-Agent)
+                            result = run_research(current_topic, log_placeholder, image_context, research_mode)
 
                     
-                st.session_state['result'] = result
+                    st.session_state['result'] = result
                 
-                # Generate safe filename with KST timestamp
-                timestamp = datetime.datetime.now(KST).strftime("%Y%m%d_%H%M%S")
-                st.session_state['report_filename'] = f"Strategic_Report_{timestamp}.md"
+                    # Generate safe filename with KST timestamp
+                    timestamp = datetime.datetime.now(KST).strftime("%Y%m%d_%H%M%S")
+                    st.session_state['report_filename'] = f"Strategic_Report_{timestamp}.md"
                 
-                st.balloons()
+                    st.balloons()
                 
-                # Sound Effect Trigger (Enhanced with JS for reliability)
-                if enable_sound:
-                    import streamlit.components.v1 as components
-                    # Using a more reliable notification sound URL (Bell/Ping)
-                    audio_url = "https://actions.google.com/sounds/v1/alarms/beep_short.ogg"
-                    components.html(f"""
+                    # Sound Effect Trigger (Enhanced with JS for reliability)
+                    if enable_sound:
+                        import streamlit.components.v1 as components
+                        # Using a more reliable notification sound URL (Bell/Ping)
+                        audio_url = "https://actions.google.com/sounds/v1/alarms/beep_short.ogg"
+                        components.html(f"""
                         <audio id="success-sound" preload="auto">
                             <source src="{audio_url}" type="audio/ogg">
                         </audio>
@@ -1386,42 +1445,70 @@ with col_right:
                             }})();
                         </script>
                     """, height=0)
-            except Exception as e:
-                st.error(f"실행 중 치명적 오류 발생: {e}")
-            finally:
-                st.session_state['is_running'] = False
+                except Exception as e:
+                    st.error(f"실행 중 치명적 오류 발생: {e}")
+                finally:
+                    st.session_state['is_running'] = False
     
     
-    if 'result' in st.session_state and st.session_state['result']:
-        # Ensure result is always treated as string for display
-        result_text = str(st.session_state['result'])
-        report_placeholder.markdown('<div class="report-card">', unsafe_allow_html=True)
-        report_placeholder.markdown(result_text)
-        report_placeholder.markdown('</div>', unsafe_allow_html=True)
+        if 'result' in st.session_state and st.session_state['result']:
+            # Ensure result is always treated as string for display
+            result_text = str(st.session_state['result'])
+            report_placeholder.markdown('<div class="report-card">', unsafe_allow_html=True)
+            report_placeholder.markdown(result_text)
+            report_placeholder.markdown('</div>', unsafe_allow_html=True)
         
-        # Robust Download Logic: Use BytesIO and Safe Filename
-        try:
-             import io
-             # Ensure clean UTF-8 encoding
-             file_stream = io.BytesIO(result_text.encode('utf-8'))
+            # Robust Download Logic: Use BytesIO and Safe Filename
+            try:
+                 import io
+                 # Ensure clean UTF-8 encoding
+                 file_stream = io.BytesIO(result_text.encode('utf-8'))
              
-             # Generate a strictly safe filename
-             dl_timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-             dl_filename = f"Research_Result_{dl_timestamp}.md"
+                 # Generate a strictly safe filename
+                 dl_timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+                 dl_filename = f"Research_Result_{dl_timestamp}.md"
              
-             st.download_button(
-                label="📩 Download Report (.md)",
-                data=file_stream,
-                file_name=dl_filename,
-                mime="text/markdown",
-                key=f"dl_btn_{dl_timestamp}" # Dynamic key to force re-render
-            )
-        except Exception as e:
-            st.error(f"Download Error: {e}")
+                 st.download_button(
+                    label="📩 Download Report (.md)",
+                    data=file_stream,
+                    file_name=dl_filename,
+                    mime="text/markdown",
+                    key=f"dl_btn_{dl_timestamp}" # Dynamic key to force re-render
+                )
+            except Exception as e:
+                st.error(f"Download Error: {e}")
             
-    else:
-        report_placeholder.info("최종 보고서가 생성되는 위치입니다.")
-    st.markdown('</div>', unsafe_allow_html=True)
+        else:
+            report_placeholder.markdown("""
+            <div style="height: 560px; display: flex; align-items: center; justify-content: center; background: rgba(15, 23, 42, 0.15); border-radius: 14px; border: 1px dashed var(--glass-border);">
+                <div style="text-align: center; color: var(--text-color); opacity: 0.8;">
+                    최종 보고서가 생성되는 위치입니다.
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+col_util_left, col_util_mid, col_util_right = st.columns([1.1, 1.35, 1.35])
+
+with col_util_left:
+    with st.container(border=True):
+        st.markdown("### 📸 Multi-modal Vision (Beta)")
+        uploaded_image = st.file_uploader("이미지 분석이 필요하면 업로드하세요 (JPG/PNG)", type=["jpg", "jpeg", "png"])
+
+        if uploaded_image:
+            st.image(uploaded_image, caption="분석 대상 이미지", use_container_width=True)
+            import base64
+            image_bytes = uploaded_image.getvalue()
+            image_b64 = base64.b64encode(image_bytes).decode('utf-8')
+            st.session_state['uploaded_image_b64'] = image_b64
+        else:
+            st.session_state['uploaded_image_b64'] = None
+
+        st.markdown("""
+        <div style="margin-top: 16px; font-size: 0.9em; color: var(--text-color); font-weight: 500;">
+        <b>💡 Model Recommendation:</b><br>
+        협업의 시작은 <span class="model-badge badge-pro">Gemini 3 Pro (High)</span>에게 이 지시서를 맡기는 것입니다.
+        </div>
+        """, unsafe_allow_html=True)
 
 st.markdown("---")
 st.markdown('<div style="text-align: center; opacity: 0.5; font-size: 0.8em;">© 2026 AI 자동화 연구 - Powered by Google Gemini 2.5 Pro & Flash & Claude 4.5 Thinking</div>', unsafe_allow_html=True)
