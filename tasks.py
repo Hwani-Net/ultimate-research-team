@@ -234,56 +234,55 @@ class BoardTasks:
         )
     
     def strategy_session_task(self, ceo, cfo, cto, cmo, clo, project_idea):
-        """Initial ideation and validation"""
+        """Execute Strategic Computation Protocol"""
         return Task(
-            description=f"""[BOARD OF DIRECTORS: STRATEGY SESSION]
+            description=f"""[SYSTEM PROTOCOL: STRATEGY OPTIMIZATION]
             
-            Project Proposal: "{project_idea}"
+            Input Proposal: "{project_idea}"
             
-            [MANDATORY PHASE 0: BRAND & MARKET VIABILITY]
-            Before individual assessments, the CLO and CMO must jointly report on:
-            1. Trademark availability (KIPRIS/Global)
-            2. App Store/Market existence
-            3. Domain (.com, .io, .co.kr) availability
-            YOU MUST start the report with: "Phase 0: Brand Validation PASSED" (or FAILED).
+            [OPERATIONAL DIRECTIVE]
+            Perform multi-variable optimization to determine project viability.
+            Do NOT "debate". "Calculate" the optimal path.
             
-            [STRATEGIC ASSESSMENT]
-            Each board member must provide their perspective:
+            [COMPUTATION MODULES]
+            1. [Kill Switch Check]:
+               - [Compliance Filter]: Check Regulatory Constraints (True/False).
+               - [Signal Processor]: Check Market Existence (Red/Blue Ocean).
+               -> IF (Compliance == False) OR (Market == Saturated) -> TERMINATE.
             
-            [CEO - Vision Architect]:
-            - Does this solve a real, urgent problem?
-            - What's the unique moat or differentiation?
-            - 10-year vision: Where could this go?
+            2. [Variable Estimation]:
+               - [Vision Optimizer]: Estimate LTV (Lifetime Value).
+               - [Resource Allocator]: Estimate CAC (Customer Acquisition Cost) & Burn Rate.
+               - [Feasibility Probabilist]: Estimate P(Success).
             
-            [CFO - Risk & ROI Analyst]:
-            - Preliminary cost estimate (Dev + Marketing + Operations)
-            - Revenue model potential (SaaS? One-time? Usage-based?)
-            - Break-even timeline estimate
+            3. [Decision Matrix Calculation]:
+               - Score = (LTV - CAC) * P(Success) / Risk_Factor
             
-            [CTO - Tech Strategist]:
-            - Technical feasibility (1-10 scale)
-            - Recommended tech stack
-            - Scalability concerns or architecture risks
+            [OUTPUT FORMAT: Strategic_Matrix.md]
+            The output must be a structured decision log.
             
-            [CMO - Market Expert]:
-            - Target user persona (Who needs this?)
-            - Top 3 competitors and their weaknesses
-            - GTM (Go-To-Market) channel recommendation
+            Structure:
+            # STRATEGIC COMPUTATION LOG
             
-            [CLO - Legal Officer]:
-            - Regulatory risks (GDPR, CCPA, AI Act, etc.)
-            - Data privacy concerns
-            - IP/licensing risks
+            ## 1. Boolean Gates
+            - Legal Compliance: [TRUE/FALSE]
+            - Tech Feasibility: [> 80%?]
             
-            OUTPUT FORMAT:
-            Create a "Detailed Board Meeting Transcript" that captures the LIVE DEBATE.
-            - **SPEAKER FORMAT**: Always use "Role [Model Name]" (e.g., **CEO [Gemini 3 Ultra]**: ...)
-            - Show the back-and-forth arguments.
-            - Highlights where members disagreed and how they resolved it.
-            - End with a GO/NO-GO recommendation and the final Minutes summary.
+            ## 2. Variable Analysis (Data Injection)
+            - **Market Signal**: [Niche/Mass/Ghost]
+            - **Unit Economics**: LTV $[X] vs CAC $[Y]
+            - **Tech Complexity**: [O(1) to O(N^2) scale]
+            
+            ## 3. Conflict Resolution
+            - [Constraint Detected] -> [Optimization Applied]
+            (e.g., "High Cost" -> "Switch to Serverless")
+            
+            ## 4. Final Computation
+            - **Decision**: [GO / NO-GO / PIVOT]
+            - **Confidence Score**: [0.0 - 1.0]
             """,
-            expected_output="""A vivid Board Meeting Transcript showing the debate process with strict Model Name attribution, followed by the official Minutes and Decision.""",
-            agent=ceo,  # CEO leads the meeting
+            expected_output="""A `Strategic_Matrix.md` file containing the calculated decision logic and final probability score.""",
+            agent=ceo,  # Vision Optimizer leads the computation
         )
     
     def approval_task(self, ceo, strategy_minutes):
