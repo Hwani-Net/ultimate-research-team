@@ -77,64 +77,55 @@ with st.sidebar:
 
 # Define Theme Palettes
 if st.session_state.theme == 'Dark':
-    primary_gradient = "linear-gradient(135deg, #10b981 0%, #3b82f6 50%, #6366f1 100%)" # Emerald to Indigo
-    bg_color = "#020617" # Deeper Indigo-Black
-    bg_image = """radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.1) 0, transparent 50%), 
-                  radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.1) 0, transparent 50%), 
-                  radial-gradient(at 50% 100%, rgba(59, 130, 246, 0.05) 0, transparent 50%)"""
-    text_color = "#f8fafc" # Slate 50
-    glass_bg = "rgba(15, 23, 42, 0.6)" # Slate 900 semi-transparent
-    glass_border = "rgba(148, 163, 184, 0.1)" # Slate 400 very subtle
-    # Use background property for gradient
+    primary_gradient = "linear-gradient(135deg, #14b8a6 0%, #3b82f6 50%, #6366f1 100%)" 
+    bg_color = "#0a0f1e" # Rich Executive Navy
+    bg_image = """radial-gradient(at 0% 0%, rgba(20, 184, 166, 0.1) 0, transparent 50%), 
+                  radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.1) 0, transparent 50%)"""
+    text_color = "#e2e8f0" # High-contrast off-white
+    glass_bg = "rgba(15, 23, 42, 0.75)"
+    glass_border = "rgba(255, 255, 255, 0.05)"
     sidebar_css = """
-        background: linear-gradient(180deg, 
-        rgba(10, 15, 30, 0.98) 0%, 
-        rgba(15, 23, 42, 0.95) 50%,
-        rgba(10, 15, 30, 0.98) 100%) !important;
+        background: linear-gradient(180deg, #070b14 0%, #0a0f1e 100%) !important;
     """
-    console_bg = "rgba(2, 6, 23, 0.9)" # Solid deep indigo
-    console_text = "#a5f3fc" # Cyan 200
-    report_bg = "rgba(30, 41, 59, 0.3)" # Slate 800 subtle
+    console_bg = "rgba(2, 6, 23, 0.95)"
+    console_text = "#5eead4"
+    report_bg = "rgba(255, 255, 255, 0.02)"
     
-else:  # Light Mode (Modern Professional)
-    primary_gradient = "linear-gradient(135deg, #059669 0%, #2563eb 50%, #4f46e5 100%)" 
+else:  # Light Mode (Clean Executive)
+    primary_gradient = "linear-gradient(135deg, #0d9488 0%, #2563eb 50%, #4f46e5 100%)" 
     bg_color = "#f8fafc" 
-    bg_image = """radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.05) 0, transparent 50%), 
+    bg_image = """radial-gradient(at 0% 0%, rgba(20, 184, 166, 0.05) 0, transparent 50%), 
                   radial-gradient(at 100% 0%, rgba(79, 70, 229, 0.05) 0, transparent 50%)"""
     text_color = "#0f172a" 
-    glass_bg = "rgba(255, 255, 255, 0.8)"
+    glass_bg = "rgba(255, 255, 255, 0.85)"
     glass_border = "rgba(148, 163, 184, 0.2)"
-    # Use background-color and remove background-image
     sidebar_css = """
         background-color: #ffffff !important;
-        background-image: none !important;
     """
     console_bg = "#0f172a" 
     console_text = "#f1f5f9"
-    report_bg = "rgba(241, 245, 249, 0.8)"
+    report_bg = "rgba(241, 245, 249, 0.95)"
 
 st.markdown(f"""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
 
 :root {{
     --primary-gradient: {primary_gradient};
     --glass-bg: {glass_bg};
     --glass-border: {glass_border};
-    --accent-glow: 0 0 30px rgba(16, 185, 129, 0.2);
+    --accent-glow: 0 0 25px rgba(20, 184, 166, 0.25);
     --text-color: {text_color};
     --console-bg: {console_bg};
     --console-text: {console_text};
     --report-bg: {report_bg};
-    --brand-1: #10b981;
-    --brand-2: #3b82f6;
-    --brand-3: #6366f1;
 }}
 
-/* Global Text Reset - Aggressive */
+/* Global Text Reset */
 html, body, [class*="css"] {{
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', -apple-system, sans-serif;
     color: var(--text-color) !important;
+    letter-spacing: -0.01em;
 }}
 
 /* Main Background */
@@ -1097,7 +1088,7 @@ with st.sidebar:
         st.rerun()
 
 # Main Layout
-st.markdown('<h1 style="text-align: center; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 3.5em; margin-bottom: 0.1em; font-family: \'Fraunces\', serif;">ULTIMATE RESEARCH TEAM</h1>', unsafe_allow_html=True)
+st.markdown('<h1 style="text-align: center; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 3.5em; margin-bottom: 0.1em; font-family: \'Inter\', sans-serif; font-weight: 800; letter-spacing: -0.03em;">ULTIMATE RESEARCH TEAM</h1>', unsafe_allow_html=True)
 st.markdown('<div class="status-banner">⚙️ [ANTIGRAVITY] ULTIMATE SOULLESS MODE v11.5 ACTIVATED | PRECISION: 99.9%</div>', unsafe_allow_html=True)
 
 # 🏆 최상단 핵심 프롬프트 배치 (User Request: 한 번에 때려 부을 수 있게)
