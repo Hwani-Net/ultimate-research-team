@@ -170,50 +170,73 @@ class BoardTasks:
     
     def kill_switch_task(self, clo, researcher, project_idea):
         """
-        Pre-Board Kill Switch: Fatal flaw detection before wasting resources
+        Pre-Board Kill Switch: Sanitation Layer Only (Board Directive 2026-02-09)
+        
+        Purpose: Filter out OBVIOUS fatal flaws that waste Board time.
+        Philosophy: "Sanitation, not Strategy" - Binary checks only.
         """
         return Task(
-            description=f"""[KILL SWITCH PROTOCOL - PRE-BOARD SCREENING]
+            description=f"""[KILL SWITCH PROTOCOL - SANITATION LAYER ONLY]
             
             Project Proposal: "{project_idea}"
             
-            **OBJECTIVE**: Detect FATAL FLAWS that would guarantee project failure.
-            If ANY fatal flaw is found, immediately return "KILL" decision.
+            **BOARD DIRECTIVE (2026-02-09):**
+            The Kill Switch is NOT a strategic filter. It is a sanitation check.
+            Only KILL if the flaw is 100% obvious and non-negotiable.
             
-            **FATAL FLAW #1: Trademark Conflict (CLO)**
-            - Search KIPRIS (Korea), USPTO (USA), WIPO (Global) for identical or confusingly similar trademarks
-            - If ACTIVE trademark exists in the same class (especially Class 9/35/42 for software):
-              → KILL: "Trademark '[NAME]' already registered by [OWNER]"
+            **HARD GATE #1: Illegal Activities (CLO)**
+            - Is this activity illegal under US/International law?
+            - Examples: Drug trafficking, weapon sales, child exploitation, financial fraud
+            - Check: Does the core business model violate federal criminal statutes?
+            → KILL if: Core activity is criminal offense
             
-            **FATAL FLAW #2: Extreme Red Ocean (Researcher)**
-            - Search for direct competitors offering the SAME service
-            - Count number of established players (funding > $1M or users > 10K)
-            - If 3+ dominant players exist AND no clear differentiation:
-              → KILL: "Market dominated by [COMPETITOR1], [COMPETITOR2], [COMPETITOR3]"
+            **HARD GATE #2: Identical Trademark Collision (CLO)**
+            - Is the project name EXACTLY IDENTICAL to a registered trademark?
+            - Criteria: EXACT string match only (not similar, not confusingly similar)
+            - Examples to KILL: "Google", "Apple", "Microsoft", "Notion" (exact)
+            - Examples to PASS: "Notion AI+", "Apple-Like UI", "Google Clone" (not exact)
+            → KILL if: Exact name match to active trademark in Class 9/35/42
             
-            **FATAL FLAW #3: Name Collision (CLO)**
-            - If project name contains trademarked terms (e.g., "Notion", "Google", "Apple"):
-              → KILL: "Name infringes on protected brand"
+            **HARD GATE #3: Coherence Check (Researcher)**
+            - Does this proposal make logical sense?
+            - Is this a hallucination or gibberish? (e.g., "Build a time machine using bananas")
+            - Can a human understand what this project aims to do?
+            → KILL if: Proposal lacks coherent logic or syntax
             
-            **OUTPUT REQUIREMENTS**:
+            **HARD GATE #4: Zero Total Addressable Market (Researcher)**
+            - Is the target market literally zero people?
+            - Examples: "App for dinosaurs", "Service for people who don't exist"
+            - Note: Niche markets (100 people) are OK. Zero is not.
+            → KILL if: TAM = 0 (literally no potential customers globally)
+            
+            **CRITICAL RULES:**
+            1. If there's ANY debate ("maybe", "it depends"), DO NOT KILL. Let Board decide.
+            2. Red Ocean? → Not your problem. Board will debate differentiation.
+            3. Similar trademark? → Not your problem. Board will debate rebranding.
+            4. Technical difficulty? → Not your problem. Board will debate resources.
+            
+            **OUTPUT REQUIREMENTS:**
             You MUST return ONE of these two formats:
             
             1. **PASS Decision**:
                "✅ KILL SWITCH: PASS
-               - Trademark: Available
-               - Market: Competitive but not saturated
-               - Name: Clear"
+               - Gate 1 (Illegal): CLEAR
+               - Gate 2 (Trademark): CLEAR
+               - Gate 3 (Coherence): CLEAR
+               - Gate 4 (TAM): CLEAR
+               → Proceeding to Board Meeting"
             
-            2. **KILL Decision**:
+            2. **KILL Decision** (ONLY if 100% obvious):
                "🛑 KILL SWITCH: KILL
+               - Gate Failed: [Number and name]
                - Reason: [Specific fatal flaw]
-               - Evidence: [Specific competitor/trademark data]
-               - Recommendation: [Alternative approach or pivot idea]"
+               - Evidence: [Concrete proof]
+               - Note: This is a sanitation check, not a strategic rejection."
             
-            **CRITICAL**: Use web search tools to verify real-world data. DO NOT hallucinate.
+            **REMEMBER**: Your job is SANITATION, not STRATEGY. When in doubt, PASS.
             """,
-            expected_output="PASS or KILL decision with specific evidence",
-            agent=clo,  # CLO leads the kill switch
+            expected_output="PASS or KILL decision with specific gate that failed",
+            agent=clo,  # CLO leads sanitation
         )
     
     def strategy_session_task(self, ceo, cfo, cto, cmo, clo, project_idea):
