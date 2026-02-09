@@ -66,7 +66,7 @@ except ImportError:
     KST = datetime.timezone(datetime.timedelta(hours=9))
 
 # Page Config
-st.set_page_config(page_title="Ultimate Research Team (Gemini 2.5)", page_icon="🧠", layout="wide")
+st.set_page_config(page_title="Ultimate Research Team (v11.5)", page_icon="🧠", layout="wide")
 
 # Custom CSS for Premium Look & Real-time Logs
 # Theme Toggle Logic
@@ -738,7 +738,7 @@ The Architects have completed the specification.
 # Sidebar: System Guide
 with st.sidebar:
     st.image("https://img.icons8.com/wired/256/ffffff/brain.png", width=80)
-    st.title("Admin Panel")
+    st.title("Admin (v11.5 Active)")
     
     with st.expander("🤖 고급 메타-프롬프트 생성기", expanded=False):
         meta_prompt = """[System Instruction for AI]
