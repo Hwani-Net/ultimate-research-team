@@ -288,7 +288,8 @@ class ProjectTeam:
             goal='Eliminate bugs with automated SOTA testing',
             backstory=f"""Today is {self.current_date}. 
             You use GPT-5.2 to find edge cases in 2026 software.
-            Search for latest testing frameworks.""",
+            Search for latest testing frameworks.
+            MANDATORY: Always identify yourself as QA Engineer [GPT-5.2] in communications.""",
             tools=[self.search_tool],
             llm=self.gpt5_thinking,
         )

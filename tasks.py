@@ -212,11 +212,12 @@ class BoardTasks:
             
             OUTPUT FORMAT:
             Create a "Detailed Board Meeting Transcript" that captures the LIVE DEBATE.
+            - **SPEAKER FORMAT**: Always use "Role [Model Name]" (e.g., **CEO [Gemini 3 Ultra]**: ...)
             - Show the back-and-forth arguments.
             - Highlights where members disagreed and how they resolved it.
             - End with a GO/NO-GO recommendation and the final Minutes summary.
             """,
-            expected_output="""A vivid Board Meeting Transcript showing the debate process, followed by the official Minutes and Decision.""",
+            expected_output="""A vivid Board Meeting Transcript showing the debate process with strict Model Name attribution, followed by the official Minutes and Decision.""",
             agent=ceo,  # CEO leads the meeting
         )
     
