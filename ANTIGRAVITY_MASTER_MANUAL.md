@@ -116,18 +116,73 @@
 4. **안전 백업**
 5. **동시 구현 / 자가 평가 / 시각 증명**
 
-##  보고 형식 (JSON Strict)
+## 📋 보고 형식 (Mandatory Checklist with Free Format)
+
+**원칙**: JSON 강제는 하지 않지만, 아래 **필수 항목**은 반드시 포함하라.
+
+### ✅ 필수 보고 항목 (Mandatory Items)
+모든 작업 완료 후 보고 시 반드시 다음을 포함하라. 형식(JSON/Markdown/자유 텍스트)은 자유.
+
+1. **Status (상태)**
+   - 성공/실패/진행 중 명시
+   
+2. **Self-Evaluation (자가 평가)**
+   - Score: 0~100점 (정량 평가)
+   - Breakdown: accuracy, efficiency, readability, aesthetic 등
+   - Justification: 90점 이상인 이유 또는 감점 사유
+   
+3. **Next Model Recommendation (다음 모델 추천)**
+   - Tier: SS(Oracle) | S(Deep) | A(Pro) | B(Flash)
+   - Model: 구체적 모델명 (예: Claude Opus 4.5, Gemini 3 Pro)
+   - Mode: Fast | Planning
+   - Reason: 객관적 공학 근거
+   - Next Task: 구체적 지시 사항
+
+### 📝 예시 (자유 형식)
+```markdown
+## 작업 완료 보고
+
+### Status
+✅ Success - Kill Switch JSON 구조화 완료
+
+### Self-Evaluation
+- **Score**: 92/100
+- **Breakdown**: 
+  - Accuracy: 95 (Pydantic 모델 정확)
+  - Efficiency: 88 (Fallback 로직 필요)
+  - Readability: 90 (코드 명확)
+  - Aesthetic: N/A
+- **Justification**: Pydantic 강제로 파싱 오류 제로화. 단, 레거시 호환성을 위한 Fallback 추가로 복잡도 증가
+
+### Next Model Recommendation
+- **Tier**: A (Pro)
+- **Model**: Claude Sonnet 4.5
+- **Mode**: Planning
+- **Reason**: 보고 형식 개선 같은 문서 리팩토링은 Sonnet의 강점
+- **Next Task**: ANTIGRAVITY_MASTER_MANUAL.md 업데이트 승인 대기
+```
+
+**또는 JSON 형식** (선택사항):
 ```json
 {
   "status": "success",
-  "agent_info": {
-    "orchestrator_model": "[현재 구동 모델명]",
-    "active_agents": ["Role [Model Name]", "..."]
+  "self_evaluation": {
+    "score": 92,
+    "breakdown": {"accuracy": 95, "efficiency": 88, "readability": 90},
+    "justification": "Pydantic 강제로 파싱 오류 제로화"
   },
-  "self_evaluation": { "score": 100, "justification": "..." },
-  "next_model_recommendation": { "model": "...", "reason": "..." }
+  "next_model_recommendation": {
+    "tier": "A",
+    "model": "Claude Sonnet 4.5",
+    "mode": "Planning",
+    "reason": "문서 리팩토링 특화",
+    "next_task": "Manual 업데이트 승인 대기"
+  }
 }
 ```
+
+---
+
 ---
 [이 설정으로 영구 고정. 삭제된 규칙은 없다. 모든 제약을 동시에 만족하며 완벽함을 증명하라.]
 ```

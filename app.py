@@ -580,22 +580,59 @@ def run_board_and_project_team(project_idea, log_container):
             print("\n🔍 Running Kill Switch Protocol...")
             kill_result = kill_switch_crew.kickoff()
             
-            if hasattr(kill_result, 'raw'):
-                kill_decision = kill_result.raw
+            # Parse structured output
+            if hasattr(kill_result, 'pydantic'):
+                kill_data = kill_result.pydantic
+            elif hasattr(kill_result, 'json_dict'):
+                from models import KillSwitchResult
+                kill_data = KillSwitchResult(**kill_result.json_dict)
             else:
-                kill_decision = str(kill_result)
+                # Fallback: try to parse as dict
+                import json
+                from models import KillSwitchResult
+                try:
+                    kill_dict = json.loads(str(kill_result))
+                    kill_data = KillSwitchResult(**kill_dict)
+                except:
+                    # Last resort: string check
+                    kill_decision = str(kill_result)
+                    if "KILL" in kill_decision.upper():
+                        print("\n❌ [PROJECT TERMINATED BY KILL SWITCH]")
+                        return f"## 🛑 Project Terminated\n\n{kill_decision}"
+                    else:
+                        print("\n✅ Kill Switch: PASS (fallback parsing)")
+                        kill_data = None
             
-            print("\n✅ [KILL SWITCH RESULT]")
-            print("=" * 30)
-            print(kill_decision)
-            
-            # Check for KILL decision
-            if "KILL SWITCH: KILL" in kill_decision or "🛑" in kill_decision:
-                print("\n❌ [PROJECT TERMINATED BY KILL SWITCH]")
-                print("The project has FATAL FLAWS. Board Meeting will NOT be convened.")
-                return f"## 🛑 Project Terminated - Kill Switch Activated\n\n{kill_decision}\n\n---\n**Note**: This project was terminated BEFORE wasting Board resources due to fatal flaws detected in pre-screening."
-            
-            print("\n✅ Kill Switch: PASS. Proceeding to Board Meeting...")
+            if kill_data:
+                print("\n✅ [KILL SWITCH RESULT]")
+                print("=" * 30)
+                print(f"Decision: {kill_data.decision}")
+                if kill_data.gate_failed:
+                    print(f"Gate Failed: #{kill_data.gate_failed} - {kill_data.gate_name}")
+                print(f"Reason: {kill_data.reason}")
+                if kill_data.evidence:
+                    print(f"Evidence: {kill_data.evidence}")
+                
+                # Check for KILL decision
+                if kill_data.decision == "KILL":
+                    print("\n❌ [PROJECT TERMINATED BY KILL SWITCH]")
+                    print("The project has FATAL FLAWS. Board Meeting will NOT be convened.")
+                    return f"""## 🛑 Project Terminated - Kill Switch Activated
+
+### Gate Failed
+**#{kill_data.gate_failed}: {kill_data.gate_name}**
+
+### Reason
+{kill_data.reason}
+
+### Evidence
+{kill_data.evidence or 'N/A'}
+
+---
+**Note**: This project was terminated BEFORE wasting Board resources due to fatal flaws detected in pre-screening.
+"""
+                
+                print("\n✅ Kill Switch: PASS. Proceeding to Board Meeting...")
             
         except Exception as e:
             import traceback

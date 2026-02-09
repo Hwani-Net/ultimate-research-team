@@ -163,6 +163,9 @@ class UltimateResearchTasks:
 # NEW: BOARD OF DIRECTORS TASKS
 # ============================================================================
 
+from crewai import Task, Agent
+from models import KillSwitchResult, BoardDecision
+
 class BoardTasks:
     """
     Strategic Board Meeting Tasks
@@ -215,28 +218,19 @@ class BoardTasks:
             3. Similar trademark? → Not your problem. Board will debate rebranding.
             4. Technical difficulty? → Not your problem. Board will debate resources.
             
-            **OUTPUT REQUIREMENTS:**
-            You MUST return ONE of these two formats:
-            
-            1. **PASS Decision**:
-               "✅ KILL SWITCH: PASS
-               - Gate 1 (Illegal): CLEAR
-               - Gate 2 (Trademark): CLEAR
-               - Gate 3 (Coherence): CLEAR
-               - Gate 4 (TAM): CLEAR
-               → Proceeding to Board Meeting"
-            
-            2. **KILL Decision** (ONLY if 100% obvious):
-               "🛑 KILL SWITCH: KILL
-               - Gate Failed: [Number and name]
-               - Reason: [Specific fatal flaw]
-               - Evidence: [Concrete proof]
-               - Note: This is a sanitation check, not a strategic rejection."
+            **OUTPUT FORMAT:**
+            Return a JSON object with these fields:
+            - decision: "PASS" or "KILL"
+            - gate_failed: Gate number (1-4) or null if PASS
+            - gate_name: Name of failed gate or null
+            - reason: Detailed explanation
+            - evidence: Concrete proof (trademark ID, law citation) or null
             
             **REMEMBER**: Your job is SANITATION, not STRATEGY. When in doubt, PASS.
             """,
-            expected_output="PASS or KILL decision with specific gate that failed",
+            expected_output="Structured decision with gate analysis",
             agent=clo,  # CLO leads sanitation
+            output_pydantic=KillSwitchResult  # ← Structured output enforcement
         )
     
     def strategy_session_task(self, ceo, cfo, cto, cmo, clo, project_idea):
