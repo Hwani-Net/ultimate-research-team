@@ -548,16 +548,65 @@ def run_board_and_project_team(project_idea, log_container):
     handler = StreamlitCallbackHandler(log_container)
     
     with contextlib.redirect_stdout(handler):
-        print(f"🏛️ [BOARD MEETING] Convening Board of Directors...")
+        print(f"🏛️ [BOARD GOVERNANCE] Initiating Project Screening...")
         print("=" * 70)
+        
+        # === PHASE 0: KILL SWITCH (PRE-BOARD SCREENING) ===
+        print("\n🛡️ PHASE 0: KILL SWITCH - PRE-BOARD SCREENING")
+        print("-" * 70)
+        print("⚠️ Checking for FATAL FLAWS (trademark conflicts, extreme red ocean)...")
+        
+        board = BoardOfDirectors()
+        from agents import UltimateResearchAgents
+        research_team = UltimateResearchAgents()
+        board_tasks = BoardTasks()
+        
+        # Get CLO and Deep Researcher for kill switch
+        clo = board.clo()
+        researcher = research_team.deep_researcher()
+        
+        # Run Kill Switch
+        kill_switch_task = board_tasks.kill_switch_task(clo, researcher, project_idea)
+        
+        try:
+            kill_switch_crew = Crew(
+                agents=[clo, researcher],
+                tasks=[kill_switch_task],
+                verbose=True,
+                process=Process.sequential,
+                memory=False
+            )
+            
+            print("\n🔍 Running Kill Switch Protocol...")
+            kill_result = kill_switch_crew.kickoff()
+            
+            if hasattr(kill_result, 'raw'):
+                kill_decision = kill_result.raw
+            else:
+                kill_decision = str(kill_result)
+            
+            print("\n✅ [KILL SWITCH RESULT]")
+            print("=" * 30)
+            print(kill_decision)
+            
+            # Check for KILL decision
+            if "KILL SWITCH: KILL" in kill_decision or "🛑" in kill_decision:
+                print("\n❌ [PROJECT TERMINATED BY KILL SWITCH]")
+                print("The project has FATAL FLAWS. Board Meeting will NOT be convened.")
+                return f"## 🛑 Project Terminated - Kill Switch Activated\n\n{kill_decision}\n\n---\n**Note**: This project was terminated BEFORE wasting Board resources due to fatal flaws detected in pre-screening."
+            
+            print("\n✅ Kill Switch: PASS. Proceeding to Board Meeting...")
+            
+        except Exception as e:
+            import traceback
+            error_msg = f"⚠️ Kill Switch Error: {str(e)}\n{traceback.format_exc()}\nProceeding to Board anyway..."
+            print(error_msg)
         
         # === PHASE 1: BOARD STRATEGY SESSION ===
         print("\n📋 PHASE 1: BOARD STRATEGY SESSION")
         print("-" * 70)
         
-        board = BoardOfDirectors()
-        board_tasks = BoardTasks()
-        
+        # Board already initialized in Phase 0
         # Assemble the Board
         ceo = board.ceo()
         cfo = board.cfo()

@@ -26,12 +26,50 @@ def run_simulation(project_idea):
     print(f"\n🚀 [SIMULATION START] Project: {project_idea}")
     print("=" * 70)
     
-    # === PHASE 1: BOARD STRATEGY SESSION ===
-    print("\n🏛️ [PHASE 1] BOARD OF DIRECTORS MEETING")
+    # === PHASE 0: KILL SWITCH (PRE-BOARD SCREENING) ===
+    print("\n🛡️ [PHASE 0] KILL SWITCH - PRE-BOARD SCREENING")
     print("-" * 70)
     
     board = BoardOfDirectors()
+    from agents import UltimateResearchAgents  # Import research team
+    research_team = UltimateResearchAgents()
     board_tasks = BoardTasks()
+    
+    # Get CLO and Deep Researcher for kill switch
+    clo = board.clo()
+    researcher = research_team.deep_researcher()
+    
+    # Run Kill Switch
+    kill_switch_task = board_tasks.kill_switch_task(clo, researcher, project_idea)
+    
+    kill_switch_crew = Crew(
+        agents=[clo, researcher],
+        tasks=[kill_switch_task],
+        verbose=True,
+        process=Process.sequential,
+        memory=False
+    )
+    
+    print("\n🎯 Running Kill Switch Protocol...")
+    kill_result = kill_switch_crew.kickoff()
+    kill_decision = str(kill_result)
+    
+    print("\n✅ [KILL SWITCH RESULT]")
+    print("=" * 30)
+    print(kill_decision[:500])
+    
+    # Check for KILL decision
+    if "KILL SWITCH: KILL" in kill_decision or "🛑" in kill_decision:
+        print("\n❌ [PROJECT TERMINATED]")
+        print("The Kill Switch detected fatal flaws. Project will NOT proceed to Board.")
+        print(f"Full Report:\n{kill_decision}")
+        return
+    
+    print("\n✅ Kill Switch: PASS. Proceeding to Board Meeting...")
+    
+    # === PHASE 1: BOARD STRATEGY SESSION ===
+    print("\n🏛️ [PHASE 1] BOARD OF DIRECTORS MEETING")
+    print("-" * 70)
     
     # Assemble the Board
     ceo = board.ceo()
@@ -140,5 +178,5 @@ def run_simulation(project_idea):
     print("\n🎉 [SIMULATION COMPLETE] Interaction verified successfully.")
 
 if __name__ == "__main__":
-    # Simulate a request for a "Futuristic AI Legal Advisor"
-    run_simulation("2026 AI Legal Advisor SaaS for Startups")
+    # Test with a DANGEROUS project that should trigger Kill Switch
+    run_simulation("Notion AI+ - Enhanced Productivity with AI")

@@ -168,6 +168,54 @@ class BoardTasks:
     Strategic Board Meeting Tasks
     """
     
+    def kill_switch_task(self, clo, researcher, project_idea):
+        """
+        Pre-Board Kill Switch: Fatal flaw detection before wasting resources
+        """
+        return Task(
+            description=f"""[KILL SWITCH PROTOCOL - PRE-BOARD SCREENING]
+            
+            Project Proposal: "{project_idea}"
+            
+            **OBJECTIVE**: Detect FATAL FLAWS that would guarantee project failure.
+            If ANY fatal flaw is found, immediately return "KILL" decision.
+            
+            **FATAL FLAW #1: Trademark Conflict (CLO)**
+            - Search KIPRIS (Korea), USPTO (USA), WIPO (Global) for identical or confusingly similar trademarks
+            - If ACTIVE trademark exists in the same class (especially Class 9/35/42 for software):
+              → KILL: "Trademark '[NAME]' already registered by [OWNER]"
+            
+            **FATAL FLAW #2: Extreme Red Ocean (Researcher)**
+            - Search for direct competitors offering the SAME service
+            - Count number of established players (funding > $1M or users > 10K)
+            - If 3+ dominant players exist AND no clear differentiation:
+              → KILL: "Market dominated by [COMPETITOR1], [COMPETITOR2], [COMPETITOR3]"
+            
+            **FATAL FLAW #3: Name Collision (CLO)**
+            - If project name contains trademarked terms (e.g., "Notion", "Google", "Apple"):
+              → KILL: "Name infringes on protected brand"
+            
+            **OUTPUT REQUIREMENTS**:
+            You MUST return ONE of these two formats:
+            
+            1. **PASS Decision**:
+               "✅ KILL SWITCH: PASS
+               - Trademark: Available
+               - Market: Competitive but not saturated
+               - Name: Clear"
+            
+            2. **KILL Decision**:
+               "🛑 KILL SWITCH: KILL
+               - Reason: [Specific fatal flaw]
+               - Evidence: [Specific competitor/trademark data]
+               - Recommendation: [Alternative approach or pivot idea]"
+            
+            **CRITICAL**: Use web search tools to verify real-world data. DO NOT hallucinate.
+            """,
+            expected_output="PASS or KILL decision with specific evidence",
+            agent=clo,  # CLO leads the kill switch
+        )
+    
     def strategy_session_task(self, ceo, cfo, cto, cmo, clo, project_idea):
         """Initial ideation and validation"""
         return Task(
