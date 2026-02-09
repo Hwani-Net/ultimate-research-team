@@ -69,75 +69,71 @@ except ImportError:
 st.set_page_config(page_title="Ultimate Research Team (v11.5)", page_icon="🧠", layout="wide")
 
 # Custom CSS for Premium Look & Real-time Logs
-# Theme Toggle Logic
-# Theme Toggle Logic
 if 'theme' not in st.session_state:
     st.session_state.theme = 'Dark'
 
 with st.sidebar:
-    # Use key='theme' for automatic session state management
     st.radio("🌗 Theme Mode", ["Dark", "Light"], horizontal=True, label_visibility="collapsed", key="theme")
 
 # Define Theme Palettes
 if st.session_state.theme == 'Dark':
-    primary_gradient = "linear-gradient(120deg, #14b8a6 0%, #f97316 60%, #f59e0b 100%)"
-    bg_color = "#0b0f14"
-    bg_image = """radial-gradient(at 0% 0%, rgba(20, 184, 166, 0.22) 0, transparent 55%),
-                  radial-gradient(at 100% 0%, rgba(249, 115, 22, 0.18) 0, transparent 55%),
-                  radial-gradient(at 50% 100%, rgba(245, 158, 11, 0.15) 0, transparent 60%)"""
-    text_color = "#e7edf2"
-    glass_bg = "rgba(16, 24, 32, 0.72)"
-    glass_border = "rgba(255, 255, 255, 0.08)"
+    primary_gradient = "linear-gradient(135deg, #10b981 0%, #3b82f6 50%, #6366f1 100%)" # Emerald to Indigo
+    bg_color = "#020617" # Deeper Indigo-Black
+    bg_image = """radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.1) 0, transparent 50%), 
+                  radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.1) 0, transparent 50%), 
+                  radial-gradient(at 50% 100%, rgba(59, 130, 246, 0.05) 0, transparent 50%)"""
+    text_color = "#f8fafc" # Slate 50
+    glass_bg = "rgba(15, 23, 42, 0.6)" # Slate 900 semi-transparent
+    glass_border = "rgba(148, 163, 184, 0.1)" # Slate 400 very subtle
     # Use background property for gradient
     sidebar_css = """
-        background: linear-gradient(180deg,
-        rgba(9, 13, 19, 0.98) 0%,
-        rgba(14, 26, 33, 0.96) 50%,
-        rgba(9, 13, 19, 0.98) 100%) !important;
+        background: linear-gradient(180deg, 
+        rgba(10, 15, 30, 0.98) 0%, 
+        rgba(15, 23, 42, 0.95) 50%,
+        rgba(10, 15, 30, 0.98) 100%) !important;
     """
-    console_bg = "rgba(6, 12, 18, 0.92)"
-    console_text = "#7dd3fc"
-    report_bg = "rgba(255, 255, 255, 0.03)"
+    console_bg = "rgba(2, 6, 23, 0.9)" # Solid deep indigo
+    console_text = "#a5f3fc" # Cyan 200
+    report_bg = "rgba(30, 41, 59, 0.3)" # Slate 800 subtle
     
-else:  # Light Mode (High Readability)
-    primary_gradient = "linear-gradient(120deg, #0ea5a4 0%, #f97316 60%, #f59e0b 100%)"
-    bg_color = "#f7f4ef"
-    bg_image = """radial-gradient(at 0% 0%, rgba(14, 165, 164, 0.12) 0, transparent 55%),
-                  radial-gradient(at 100% 0%, rgba(249, 115, 22, 0.12) 0, transparent 55%),
-                  radial-gradient(at 50% 100%, rgba(245, 158, 11, 0.08) 0, transparent 60%)"""
-    text_color = "#1b1f24"
-    glass_bg = "rgba(255, 255, 255, 0.82)"
-    glass_border = "rgba(9, 13, 20, 0.14)"
+else:  # Light Mode (Modern Professional)
+    primary_gradient = "linear-gradient(135deg, #059669 0%, #2563eb 50%, #4f46e5 100%)" 
+    bg_color = "#f8fafc" 
+    bg_image = """radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.05) 0, transparent 50%), 
+                  radial-gradient(at 100% 0%, rgba(79, 70, 229, 0.05) 0, transparent 50%)"""
+    text_color = "#0f172a" 
+    glass_bg = "rgba(255, 255, 255, 0.8)"
+    glass_border = "rgba(148, 163, 184, 0.2)"
     # Use background-color and remove background-image
     sidebar_css = """
-        background: linear-gradient(180deg, #fff7ee 0%, #f1f5f9 100%) !important;
+        background-color: #ffffff !important;
         background-image: none !important;
     """
-    console_bg = "#0b1220"
-    console_text = "#a5f3fc"
-    report_bg = "rgba(255, 255, 255, 0.72)"
+    console_bg = "#0f172a" 
+    console_text = "#f1f5f9"
+    report_bg = "rgba(241, 245, 249, 0.8)"
 
 st.markdown(f"""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=Manrope:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;700&display=swap');
 
 :root {{
     --primary-gradient: {primary_gradient};
     --glass-bg: {glass_bg};
     --glass-border: {glass_border};
-    --accent-glow: 0 0 24px rgba(20, 184, 166, 0.35);
+    --accent-glow: 0 0 30px rgba(16, 185, 129, 0.2);
     --text-color: {text_color};
     --console-bg: {console_bg};
     --console-text: {console_text};
     --report-bg: {report_bg};
-    --brand-1: #14b8a6;
-    --brand-2: #f97316;
-    --brand-3: #f59e0b;
+    --brand-1: #10b981;
+    --brand-2: #3b82f6;
+    --brand-3: #6366f1;
 }}
 
 /* Global Text Reset - Aggressive */
 html, body, [class*="css"] {{
-    font-family: 'Manrope', sans-serif;
+    font-family: 'Inter', sans-serif;
     color: var(--text-color) !important;
 }}
 
