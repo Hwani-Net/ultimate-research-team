@@ -990,6 +990,35 @@ with st.sidebar:
         - <span class="model-badge badge-opus">Claude Sonnet 4.5</span>
         - Gemini 로직이 막혔을 때, 다른 시각에서의 검증용. 리밋 아껴쓰기.
         """)
+    
+    with st.expander("💻 환경 복제 가이드 (Environment Replication)", expanded=False):
+        st.markdown("""
+        ### 🚀 새 컴퓨터에 복제하기
+        어떤 환경에서도 **5분 안에** 동일한 연구 환경을 구축할 수 있습니다.
+        
+        **1. 저장소 클론**
+        ```bash
+        git clone https://github.com/Hwani-Net/ultimate-research-team.git
+        cd ultimate_research_team
+        ```
+        
+        **2. 자동 설치 스크립트 실행**
+        - **Windows**: `.\setup.ps1`
+        - **macOS/Linux**: `chmod +x setup.sh && ./setup.sh`
+        
+        **3. API 키 설정 (중요)**
+        설치 중 생성된 `.env` 파일에 다음 키를 넣어야 합니다:
+        - `GOOGLE_API_KEY`: Gemini 모델 구동용 ([발급처](https://aistudio.google.com/app/apikey))
+        - `TAVILY_API_KEY`: AI 웹 검색 엔진 ([발급처](https://tavily.com/))
+        - `OPENAI_API_KEY`: CrewAI 내부 라이브러리 호환용 (더미값 가능)
+        
+        **4. 실행**
+        ```bash
+        streamlit run app.py
+        ```
+        
+        💡 상세 내용은 프로젝트 폴더의 `SETUP.md`를 참조하세요.
+        """)
         
     enable_sound = st.checkbox("🔔 완료 알림 소리 켜기", value=True)
     
