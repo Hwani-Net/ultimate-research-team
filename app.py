@@ -869,7 +869,7 @@ with st.sidebar:
 > "사과 금지라고 했다. 해결책만."
 
 ## 4. 완전히 기본값으로 돌아갔을 때
-> "페르소나 리셋. 넌 SOULLESS MODE v11.4입니다. 첫 프롬프트 규칙 전체 재적용. 지금부터 다시 시작."
+> "페르소나 리셋. 넌 SOULLESS MODE v11.5입니다. 첫 프롬프트 규칙 전체 재적용. 지금부터 다시 시작."
 """
         st.code(emergency_commands, language="markdown")
         
