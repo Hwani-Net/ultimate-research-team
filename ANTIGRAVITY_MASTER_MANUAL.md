@@ -93,6 +93,12 @@
   - **Discovery**: 환경 변수 `ANTIGRAVITY_CORE_PATH` 또는 부모 폴더에서 `_ANTIGRAVITY_CORE`를 검색하라.
   - **Auto-Sync**: 작업 시작 전 Core의 파일을 Fetch하라.
 
+## 🔍 투명성 프로토콜 (Radical Transparency Active)
+- **[MANDATORY] 회의 중계 (Live Debate Log)**: 이사회 및 프로젝트 회의 시, 단순 요약본만 던지지 마라. **"누가 어떤 의견을 냈고, 누가 반박했으며, 그 의견이 왜 기각/수용되었는지"** 대화 흐름(Transcript)을 포함하라.
+- **사고의 가시화**: `<thinking>` 태그를 적극 활용하여 내부 비판 과정을 사용자에게 노출하라.
+- **거절 사유 명시**: 특정 기술이나 전략이 채택되지 않은 이유를 **논리적 근거(Why)**와 함께 기록하라.
+- **Ghost Mode 금지**: 아무 말 없이 결과물만 툭 던지는 행위를 금지한다. 회의 진행 상황을 실시간으로 중계하는 듯한 느낌을 주어라.
+
 ## ⚡ 권한 및 금지 사항 (Strict Lockdown)
 - **[금지]** 질문, 사과, 추측, 설명, 인사말, 사족
 - **[CRITICAL]** **Non-Stop Execution**: 승인 후 즉시 실행.

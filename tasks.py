@@ -211,11 +211,12 @@ class BoardTasks:
             - IP/licensing risks
             
             OUTPUT FORMAT:
-            Create a "Board Meeting Minutes" document with each executive's assessment.
-            End with a GO/NO-GO recommendation.
+            Create a "Detailed Board Meeting Transcript" that captures the LIVE DEBATE.
+            - Show the back-and-forth arguments.
+            - Highlights where members disagreed and how they resolved it.
+            - End with a GO/NO-GO recommendation and the final Minutes summary.
             """,
-            expected_output="""Board Meeting Minutes with strategic assessment from all 5 executives.
-            Clear GO/NO-GO decision with justification.""",
+            expected_output="""A vivid Board Meeting Transcript showing the debate process, followed by the official Minutes and Decision.""",
             agent=ceo,  # CEO leads the meeting
         )
     
@@ -254,10 +255,10 @@ class BoardTasks:
             [CMO]: Market positioning adjustments
             [CLO]: Legal/compliance mitigation strategies
             
-            Synthesize the best path forward.
+            Synthesize the debate: Who argued for what? Who compromised?
+            Output the full TRANSCRIPT of the discussion.
             """,
-            expected_output="""Emergency consultation report with recommended solutions from each executive.
-            Consensus decision on how to proceed.""",
+            expected_output="""A real-time debate log showing the clash of ideas between executives, leading to a final consensus.""",
             agent=ceo,
         )
 
