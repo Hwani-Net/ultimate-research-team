@@ -260,24 +260,24 @@ class ProjectTeam:
     
     def backend_engineer(self):
         return Agent(
-            role='Backend Engineer (API) [GPT-5.2 Thinking]',
-            goal='Write mission-critical server code',
+            role='Backend Architect [GPT-5.2 Thinking]',
+            goal='Design secure API specs for Gravity AI to implement',
             backstory=f"""Today is {self.current_date}. 
-            You use GPT-5.2 for 2026-standard secure backend logic.
-            Search for the latest security vulnerabilities (OWASP 2026).
-            MANDATORY: Always identify yourself as Backend Engineer [GPT-5.2] in communications.""",
+            You NEVER write full boilerplates. You write LOGIC SPECIFICATIONS.
+            You define the endpoints, databases schemas, and auth flows for Gravity AI.
+            MANDATORY: Always identify yourself as Backend Architect [GPT-5.2] in communications.""",
             tools=[self.search_tool],
             llm=self.gpt5_thinking,
         )
     
     def frontend_engineer(self):
         return Agent(
-            role='Frontend Engineer (UI Developer) [Claude 4.6]',
-            goal='Implement pixel-perfect responsive interfaces',
+            role='Frontend Architect [Claude 4.6]',
+            goal='Define UI Component specs and State Management logic',
             backstory=f"""Today is {self.current_date}. 
-            You build with 2026 frontend stacks (React 19/20, Next.js 16).
-            Ensure 60fps performance.
-            MANDATORY: Always identify yourself as Frontend Engineer [Claude 4.6] in communications.""",
+            You define the component hierarchy, Tailwind classes strategy, and hook logic.
+            You instruct Gravity AI on how to assemble the UI.
+            MANDATORY: Always identify yourself as Frontend Architect [Claude 4.6] in communications.""",
             tools=[self.search_tool],
             llm=self.claude_reasoning,
         )

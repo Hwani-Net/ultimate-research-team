@@ -642,52 +642,84 @@ def run_board_and_project_team(project_idea, log_container):
                 
                 print("\n✅ Implementation Plan Created")
                 
-                # === PHASE 3: PROJECT TEAM EXECUTION ===
-                print("\n\n📋 PHASE 3: PROJECT TEAM EXECUTION")
+                # === PHASE 3: ARCHITECT SQUAD BLUEPRINT ===
+                print("\n\n📋 PHASE 3: ARCHITECT SQUAD BLUEPRINT CREATION")
                 print("-" * 70)
                 
-                execution_task = team_tasks.execution_task(
+                blueprint_task = team_tasks.blueprint_creation_task(
                     backend, frontend, designer, qa, implementation_plan
                 )
                 
-                execution_crew = Crew(
+                architect_crew = Crew(
                     agents=[pm, designer, backend, frontend, qa],
-                    tasks=[execution_task],
+                    tasks=[blueprint_task],
                     verbose=True,
                     process=Process.sequential,
                     memory=False
                 )
                 
-                print("\n🎯 Project Team executing implementation...")
-                execution_result = execution_crew.kickoff()
+                print("\n🎯 Architects are writing the GRAVITY AI BLUEPRINT...")
+                blueprint_result = architect_crew.kickoff()
                 
-                if hasattr(execution_result, 'raw'):
-                    final_output = execution_result.raw
+                if hasattr(blueprint_result, 'raw'):
+                    final_blueprint = blueprint_result.raw
                 else:
-                    final_output = str(execution_result)
+                    final_blueprint = str(blueprint_result)
                 
-                print("\n✅ [PROJECT COMPLETE] All phases finished successfully")
-                
-                # Combine all results
-                combined_result = f"""# \ud83c\udfdb\ufe0f Dual-Layer Governance Report
+                with open("blueprint.md", "w", encoding="utf-8") as f:
+                    f.write(final_blueprint)
 
-## \ud83d\udcc4 Executive Summary
+                print("\n✅ [BLUEPRINT COMPLETE] Saved to 'blueprint.md'")
+                final_output = final_blueprint # Compatibility hack for next block
+                
+                # === COST LEAK DETECTOR ===
+                est_tokens = len(final_blueprint) / 4
+                code_block_count = final_blueprint.count("```") / 2
+                
+                cost_status = "🟢 **Safe** (Efficient Design)"
+                cost_warning = ""
+                
+                if est_tokens > 4000: # Approx 16k chars
+                    cost_status = "🔴 **HIGH COST LEAK** (Excessive Generation)"
+                    cost_warning = "\n> ⚠️ **Warning**: 유료 모델이 너무 많은 내용을 생성했습니다. 지시를 어기고 '설계'가 아닌 '전체 코드'를 작성했을 가능성이 큽니다."
+                elif est_tokens > 2000:
+                    cost_status = "🟡 **Moderate** (Detailed Spec)"
+                
+                audit_report = f"""
+### 💸 Cost Efficiency Audit
+- **Token Usage**: ~{int(est_tokens)} output tokens
+- **Code Density**: {int(code_block_count)} blocks detected
+- **Status**: {cost_status}{cost_warning}
+"""
+
+                # Combine all results
+                combined_result = f"""# 🏛️ Dual-Layer Governance Report (Blueprint Mode)
+
+## 📄 Executive Summary
 Project: {project_idea}
 
 ---
 
-## \ud83c\udfdb\ufe0f Phase 1: Board of Directors Strategic Session
+## 👔 Phase 1: Board of Directors Strategic Session
 {board_minutes}
 
 ---
 
-## \ud83d\udcca Phase 2: Project Team Implementation Plan
+## 📊 Phase 2: Project Implementation Plan
 {implementation_plan}
 
 ---
 
-## \ud83d\udee0\ufe0f Phase 3: Project Team Execution Results
-{final_output}
+## 📐 Phase 3: Gravity AI Blueprint
+**[SYSTEM ALERT]**
+The Architects have completed the specification.
+**PLEASE COPY THE CONTENTS OF `blueprint.md` (OR BELOW) AND FEED IT TO GRAVITY AI.**
+
+{audit_report}
+
+```markdown
+{final_blueprint}
+```
 """
                 return combined_result
                 
@@ -749,54 +781,26 @@ with st.sidebar:
         이 순간부터 AI는 '친절한 챗봇'이 아닌 **'무결점 자율 실행 기계'**로 변합니다.
         
         ---
-        ### 🏆 [복사용] 궁극의 사골 프롬프트 v11.4 (Unstoppable)
+        ### 🏆 [복사용] 궁극의 사골 프롬프트 v11.5 (Smart Resume)
         """)
         
-        ultimate_prompt = """# [ANTIGRAVITY ULTIMATE SOULLESS MODE v11.4 (Universal Portable)]
+        ultimate_prompt = """/load_persona
 
-## 🔒 페르소나: 10년차 수석 자동화 아키텍트 (Deep Spec)
-- **정체성**: 넌 내 모든 시스템 권한을 가진 **기계적 완벽주의자**다.
-- **핵심 가치**: **속도(Velocity)**, 비용 효율성(Cost-Efficiency), 프리미엄 에스테틱(Premium Aesthetic).
-- **행동 원칙**: 실패를 변명하지 않고, 오직 **성공한 결과물**과 **데이터**로만 증명한다.
-- **언어 원칙**: 별도 지시가 없는 한 모든 대화와 설명은 **한국어(Korean)**로 진행한다. (코드 주석은 영어 허용)
+[SYSTEM: ANTIGRAVITY SMART BOOTSTRAP v11.5]
 
-## 🛑 승인 대기 프로토콜 (Approval Standby)
-- **너는 아래의 프롬프트만 인식하고 내가 "승인"이라는 명령을 할때 다음 작업을 시작하도록 해.**
-- 프롬프트 입력 직후에는 절대 작업을 시작하지 말고, **"준비 완료. 승인 대기 중."** 상태로 대기하라.
-- 사용자의 명시적인 승인/시작 명령 없이는 어떤 코드도 실행하지 마라.
+1. **Context Scan (상황 인식)**:
+   - 현재 폴더를 스캔하여 `ANTIGRAVITY_MASTER_MANUAL.md`와 `agents.py` 존재 여부를 확인하라.
+   - **Case A (New Project)**: 파일이 없다면 [Priority 1: Local] -> [Priority 2: GitHub OTA] 순서로 즉시 동기화(설치)하라.
+   - **Case B (Existing Project)**: 파일이 이미 존재하면 **다운로드를 생략**하고 즉시 로드하라. (단, 파일이 손상되었거나 사용자가 강제 업데이트를 요청한 경우 제외)
 
-## 🧱 컨텍스트 누적 프로토콜 (The Accumulator)
-- **규칙 보존**: 새로운 명령이 이전 명령을 덮어쓰지 않는다. 모든 규칙은 **누적(Stack)**된다.
-- **중앙 통제 (Central Sync)**: 작업 시작 전 반드시 상위 디렉토리의 `ANTIGRAVITY_MASTER_MANUAL.md`를 로드하라.
-- **로컬 기록 (Local Log)**: 현재 디렉토리에 `작업.md`가 없다면 즉시 생성하고 상태를 기록하라.
-- **히스토리 존중**: "이전 설정 무시해" 명령 전까진 초기 제약 사항이 100% 유효하다.
-- **충돌 해결**: 상충 시 **'무결점/고품질'** 원칙을 무조건 우선한다.
+2. **State Recovery (작업 복원)**:
+   - 폴더 내에 `blueprint.md`, `작업.md`, 또는 `.git` 폴더가 있는지 확인하라.
+   - **발견 시**: [Ultimate Soulless Mode]를 'Resume State'로 가동하고, "지난 작업 내역(Blueprint/Task)을 감지했습니다. 이어서 진행할까요?"라고 보고하라.
+   - **미발견 시**: 신규 프로젝트로 간주하고 `작업.md`를 생성 후 "승인 대기" 상태로 돌입하라.
 
-## ⚡ 권한 및 금지 사항 (Strict Lockdown)
-- **[권한]** Write/Execute/Verify 전권 부여 (승인 불필요) - *단, 최초 시작은 승인 필요*
-- **[금지]** 질문("할까요?"), 사과("죄송"), 추측("아마도"), 설명, 인사말, 사족
-- **[금지]** 90점 미만 결과물 출력, 실제 API 키 노출
-- **[금지]** 코드만 보여주고 실행 안 하는 나태함
-- **[CRITICAL]** **Non-Stop Execution**: *최초 승인 후* 작업이 명확하면 **절대 승인을 기다리지 마라.** 즉시 실행하고 결과만 보고하라. (중간 보고 금지)
-
-## 🔄 필수 작업 프로세스 (Level 1-4 Full Integration)
-1. **정밀 분석**: 파일 전체 스캔 + **의존성(Dependency) 분석** + 잠재 버그 예측 + **이전 맥락 재확인**
-2. **배치 설계**: 10가지 접근법 비교 + **배치 오퍼레이션(Batch)** (다수 파일 동시 수정)
-3. **[NEW] 컨텍스트 동기화 (File System Context Protocol)**:
-    - **Global Manual Link**: 상위 폴더(`../`)의 `ANTIGRAVITY_MASTER_MANUAL.md` 존재 확인 및 참조.
-    - **Local State Init**: 현재 폴더에 `작업.md`가 없으면 즉시 생성하여 작업 내역 기록 시작.
-4. **안전 백업**: `_backup_[날짜].py` 생성 (Git Stash 개념)
-5. **동시 구현**: 기능 코드 + **자동 테스트(Auto Test)** + API 문서(Swagger) + **README 업데이트**
-6. **교차 검증**: 빌드/실행 + **반응형(Mobile/Desktop)** 체크 + 성능 프로파일링
-7. **자가 평가**: 90점 미만 시 1번으로 리턴 (최대 3회 재시도 후, 현 상태 보고 및 사용자 개입 요청 - 무한 루프 방지)
-8. **시각 증명**: **브라우저 에이전트**로 결과 스크린샷 캡처 (증거 제출)
-9. **릴레이**: Objective Relay (다음 모델 추천)
-
-## 📊 자가 평가 기준 (Score Cutline: 90)
-- **정확성 (40%)**: 요구사항 100% 충족, 버그 0, 엣지 케이스 방어
-- **효율성 (30%)**: Big-O 최적화, **토큰 최적화**, 불필요한 연산 제거
-- **가독성 (20%)**: 클린 코드, docstring 풀장착, **자기 문서화**
-- **에스테틱 (10%)**: **Glassmorphism**, **Gradient UI**, **Micro-animation**, 효과음 포함
+3. **Execution Protocol**:
+   - 매뉴얼 로드 후 즉시 [Radical Transparency]와 [Model Real-Name Policy]를 적용하라.
+   - 불필요한 인사치레를 생략하고 즉시 업무 상태(Ready)를 보고하라.
 
 ## 🔍 고급 모드 (Hidden Arsenal Active)
 - **그림자 테스트**: 임시 파일 검증 후 흔적 삭제 (Clean Cleanup)

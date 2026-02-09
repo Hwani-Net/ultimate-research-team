@@ -304,36 +304,40 @@ class ProjectTeamTasks:
             output_file="task.md",
         )
     
-    def execution_task(self, backend, frontend, designer, qa, implementation_plan):
-        """Execute the implementation"""
+    def blueprint_creation_task(self, backend, frontend, designer, qa, implementation_plan):
+        """Design the GRAVITY AI BLUEPRINT"""
         return Task(
-            description=f"""[PROJECT TEAM: EXECUTION]
+            description=f"""[ARCHITECT SQUAD: GRAVITY AI BLUEPRINT CREATION]
             
             Implementation Plan:
             {implementation_plan}
             
-            [Backend Engineer]:
-            - Design database schema
-            - Implement API endpoints
-            - Set up authentication/authorization
+            Instead of writing code, create a comprehensive **"Implementation Blueprint"** for Gravity AI (the user's local AI) to execute.
             
-            [Frontend Engineer]:
-            - Implement UI components
-            - Integrate with backend APIs
-            - Ensure responsive design
+            [OBJECTIVE]
+            Write a single file `blueprint.md` that contains instructions for creating every single file in the project.
             
-            [Designer]:
-            - Create design system (colors, typography, spacing)
-            - Design user flows
-            - Create component mockups
+            [STRUCTURE OF BLUEPRINT.MD]
+            1. **File Tree**: Complete directory structure.
+            2. **File Specifications** (Iterate through every file):
+               - **File Path**: e.g., `src/main.py`
+               - **Purpose**: What this file does.
+               - **Core Logic**: Pseudo-code or step-by-step logic description.
+               - **Key Functions/Classes**: Signatures and responsibilities.
+               - **Dependencies**: Libraries required.
+               - **[MANDATORY]**: Any specific critical instructions (e.g., "Use CORS middleware", "Set button color to #FF00FF").
             
-            [QA Engineer]:
-            - Write unit tests
-            - Write integration tests
-            - Document test cases
+            [ROLE INSTRUCTIONS]
+            - **Backend Architect**: Define Schema, API Routes, Pydantic models (Do not write full implementation).
+            - **Frontend Architect**: Define Component props, State logic, Tailwind classes.
+            - **Designer**: Define Color Tokens and Layout Grid.
+            - **QA**: Define "Critical Test Cases" that Gravity AI must verify.
             
-            DELIVER: Working code with tests and documentation.
+            [OUTPUT GUARANTEE]
+            The output MUST be a valid Markdown file named `blueprint.md`.
+            It must be so detailed that a dumb AI could copy-paste it into a perfect app.
             """,
-            expected_output="""Implemented code, tests, and documentation for the project.""",
-            agent=backend,  # Backend leads the execution
+            expected_output="""A `blueprint.md` file containing the Master Architectural Specification for Gravity AI.""",
+            agent=backend,  # Backend leads the architecture
+            output_file="blueprint.md"
         )
