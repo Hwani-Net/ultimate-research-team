@@ -370,39 +370,57 @@ class ProjectTeamTasks:
         )
     
     def blueprint_creation_task(self, backend, frontend, designer, qa, implementation_plan):
-        """Design the GRAVITY AI BLUEPRINT"""
+        """Execute Architecture Compilation Protocol"""
         return Task(
-            description=f"""[ARCHITECT SQUAD: GRAVITY AI BLUEPRINT CREATION]
+            description=f"""[SYSTEM PROTOCOL: ARCHITECTURE COMPILATION]
             
-            Implementation Plan:
+            Input: Strategic Implementation Plan
             {implementation_plan}
             
-            Instead of writing code, create a comprehensive **"Implementation Blueprint"** for Gravity AI (the user's local AI) to execute.
+            [OPERATIONAL DIRECTIVE]
+            Execute parallel processing to generate the [GRAVITY AI BLUEPRINT].
+            Do NOT "discuss". "Compute" the optimal solution.
             
-            [OBJECTIVE]
-            Write a single file `blueprint.md` that contains instructions for creating every single file in the project.
+            [MODULE ASSIGNMENTS]
+            1. [Logic Unit]: Generate Schema, API Specs, and Auth Logic. Target: O(1) complexity.
+            2. [Interface Unit]: Define Component Atoms, State Graph, and Hydration Strategy.
+            3. [Visualizer]: Generate Design Tokens (JSON) and Layout Grid System.
+            4. [Validator]: Simulate 1M concurrent users. Identify bottlenecks.
             
-            [STRUCTURE OF BLUEPRINT.MD]
-            1. **File Tree**: Complete directory structure.
-            2. **File Specifications** (Iterate through every file):
-               - **File Path**: e.g., `src/main.py`
-               - **Purpose**: What this file does.
-               - **Core Logic**: Pseudo-code or step-by-step logic description.
-               - **Key Functions/Classes**: Signatures and responsibilities.
-               - **Dependencies**: Libraries required.
-               - **[MANDATORY]**: Any specific critical instructions (e.g., "Use CORS middleware", "Set button color to #FF00FF").
+            [DATA FLOW]
+            Visualizer -> tokens.json -> Interface Unit
+            Logic Unit -> api_spec.yaml -> Interface Unit
+            Validator -> stress_test_report -> Logic Unit (Optimize)
             
-            [ROLE INSTRUCTIONS]
-            - **Backend Architect**: Define Schema, API Routes, Pydantic models (Do not write full implementation).
-            - **Frontend Architect**: Define Component props, State logic, Tailwind classes.
-            - **Designer**: Define Color Tokens and Layout Grid.
-            - **QA**: Define "Critical Test Cases" that Gravity AI must verify.
+            [CONFLICT RESOLUTION ALGORITHM]
+            If [Visualizer] output increases [Logic Unit] latency > 50ms:
+            -> REJECT Visualizer output.
+            -> Visualizer MUST re-render with simplified shaders.
             
-            [OUTPUT GUARANTEE]
-            The output MUST be a valid Markdown file named `blueprint.md`.
-            It must be so detailed that a dumb AI could copy-paste it into a perfect app.
+            [OUTPUT FORMAT: blueprint.md]
+            The output must be a machine-readable directive file.
+            
+            Structure:
+            # GRAVITY AI BLUEPRINT (v2026.02)
+            
+            ## 1. System Manifest
+            - Stack: [Precision Defined Technologies]
+            - Architecture: [Monolith/Microservices/Serverless]
+            
+            ## 2. File Directive (Iterate All)
+            ### `/src/core/engine.py`
+            - **Logic**: [Step-by-step algorithm]
+            - **Complexity**: O(N) or O(1)
+            - **Dependencies**: [Libs]
+            
+            ## 3. Security Protocol
+            - Auth: [Strategy]
+            - Encryption: [Algorithm]
+            
+            ## 4. Conflict Log
+            - [Conflict Detected] -> [Resolution Applied]
             """,
-            expected_output="""A `blueprint.md` file containing the Master Architectural Specification for Gravity AI.""",
-            agent=backend,  # Backend leads the architecture
+            expected_output="""A `blueprint.md` file containing the Master Architectural Specification for Gravity AI, written in strict technical directive format.""",
+            agent=backend,  # Logic Unit leads the architecture
             output_file="blueprint.md"
         )
