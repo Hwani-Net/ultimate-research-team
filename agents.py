@@ -57,17 +57,17 @@ class UltimateResearchAgents:
         self.search_tool = TavilySearchTool()
         self.current_date = CURRENT_DATE
         
-        # 1. Gemini (Target: Gemini 3 Flash)
-        self.flash_llm = get_sota_llm("gemini", "gemini-3-flash", "gemini-1.5-flash", "GOOGLE_API_KEY")
+        # 1. Gemini (Target: Gemini 3 Flash Preview)
+        self.flash_llm = get_sota_llm("gemini", "gemini-3-flash-preview", "gemini-1.5-flash", "GOOGLE_API_KEY")
         self.flash_model_name = "Gemini 3 Flash"
         
-        # 2. Claude (Target: Claude 4.5/Opus Next)
+        # 2. Claude (Target: Claude 3.5 Sonnet)
         self.critic_llm = get_sota_llm("anthropic", "claude-3-5-sonnet-20241022", "claude-3-opus-20240229", "ANTHROPIC_API_KEY")
-        self.critic_model_name = "Claude 4.6 (Reasoning)"
+        self.critic_model_name = "Claude 3.5 Sonnet"
         
-        # 3. GPT (Target: GPT-5.2)
-        self.pro_llm = get_sota_llm("openai", "gpt-5.2", "gpt-4o", "OPENAI_API_KEY") 
-        self.pro_model_name = "GPT-5.2 Thinking"
+        # 3. GPT (Target: GPT-4o)
+        self.pro_llm = get_sota_llm("openai", "gpt-4o", "gpt-4-turbo", "OPENAI_API_KEY") 
+        self.pro_model_name = "GPT-4o"
 
 
     def deep_researcher(self):
@@ -152,8 +152,8 @@ class BoardOfDirectors:
         self.current_date = CURRENT_DATE
         
         # SOTA Dynamic Load
-        self.gemini_ultra = get_sota_llm("gemini", "gemini-3-pro", "gemini-1.5-pro", "GOOGLE_API_KEY")
-        self.gpt5_thinking = get_sota_llm("openai", "gpt-5.2", "gpt-4o", "OPENAI_API_KEY")
+        self.gemini_ultra = get_sota_llm("gemini", "gemini-3-pro-preview", "gemini-1.5-pro", "GOOGLE_API_KEY")
+        self.gpt5_thinking = get_sota_llm("openai", "gpt-4o", "gpt-4-turbo", "OPENAI_API_KEY")
         self.claude_reasoning = get_sota_llm("anthropic", "claude-3-5-sonnet-20241022", "claude-3-opus-20240229", "ANTHROPIC_API_KEY")
 
     def ceo(self):
@@ -231,8 +231,8 @@ class ProjectTeam:
         self.current_date = CURRENT_DATE
         
         # SOTA Dynamic Load
-        self.gemini_flash = get_sota_llm("gemini", "gemini-3-flash", "gemini-1.5-flash", "GOOGLE_API_KEY")
-        self.gpt5_thinking = get_sota_llm("openai", "gpt-5.2", "gpt-4o", "OPENAI_API_KEY")
+        self.gemini_flash = get_sota_llm("gemini", "gemini-3-flash-preview", "gemini-1.5-flash", "GOOGLE_API_KEY")
+        self.gpt5_thinking = get_sota_llm("openai", "gpt-4o", "gpt-4-turbo", "OPENAI_API_KEY")
         self.claude_reasoning = get_sota_llm("anthropic", "claude-3-5-sonnet-20241022", "claude-3-opus-20240229", "ANTHROPIC_API_KEY")
 
     def project_manager(self):
