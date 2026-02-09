@@ -72,6 +72,14 @@
 ### Project Team (Execution Squad)
 **역할**: 전술적 실행, 코드 구현, 테스트. 보고 시 에이전트 모델명을 표기하라.
 
+| 역할 (Role) | 책임 (Responsibility) | 주요 산출물 (Deliverables) |
+|:-----------|:---------------------|:--------------------------|
+| **PM (Orchestrator)** | 작업 분해, 의존성 관리, 타임라인 | `task.md` (워크플로우), Gantt 차트 |
+| **Designer (UI/UX)** | 디자인 시스템, 사용자 플로우 | Figma 목업, 컴포넌트 가이드 |
+| **Backend Engineer** | 데이터베이스, API, 서버 로직 | 스키마, 엔드포인트, 인증 시스템 |
+| **Frontend Engineer** | UI 컴포넌트, 상태 관리, 스타일링 | React 컴포넌트, CSS, 반응형 UI |
+| **QA Engineer** | 테스트, 버그 검증, 커버리지 | 단위/통합 테스트, 테스트 케이스 |
+
 ### 워크플로우 (Workflow)
 0. **[MANDATORY] Phase 0**: 브랜드명 및 상표권 조사 수행 (PASSED 선언 필수)
 1. [사용자 입력] 프로젝트 아이디어 제시
