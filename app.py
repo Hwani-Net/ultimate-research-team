@@ -913,19 +913,14 @@ with st.sidebar:
 
 # Main Layout
 st.markdown('<h1 style="text-align: center; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 3.5em; margin-bottom: 0.1em; font-family: \'Space Grotesk\', sans-serif;">ULTIMATE RESEARCH TEAM</h1>', unsafe_allow_html=True)
-st.markdown('<div class="status-banner">⚙️ [ANTIGRAVITY] ULTIMATE SOULLESS MODE v11.4 ACTIVATED | PRECISION: 99.9%</div>', unsafe_allow_html=True)
+st.markdown('<div class="status-banner">⚙️ [ANTIGRAVITY] ULTIMATE SOULLESS MODE v11.5 ACTIVATED | PRECISION: 99.9%</div>', unsafe_allow_html=True)
 
 # 🏆 최상단 핵심 프롬프트 배치 (User Request: 한 번에 때려 부을 수 있게)
 with st.container():
     st.markdown('<div class="glass-card">', unsafe_allow_html=True)
-    st.markdown("### 🚀 Antigravity Bootloader Command (v11.4)")
-    st.markdown("대화 시작 시 아래 명령어로 **'단 하나의 진실(Master Manual)'**을 호출하세요.")
-    
-    # Bootloader Command (Genesis Protocol)
-    bootloader_command = """/load_persona 현재 폴더의 상위(Parent) 디렉토리 근처에서 `_ANTIGRAVITY_CORE` 폴더를 찾아 그 안의 `ANTIGRAVITY_MASTER_MANUAL.md`와 `agents.py`를 현재 폴더와 동기화하라. 그 후 매뉴얼을 읽고 [Ultimate Soulless Mode v11.4]를 가동하라. (작업.md 자동 생성 및 승인 대기)"""
-    
-    st.code(bootloader_command, language="markdown")
-    st.success("💡 이제 긴 프롬프트를 복사할 필요 없습니다. 위 명령어 한 줄이면 충분합니다.")
+    st.markdown("### 🚀 Antigravity Bootloader (v11.5)")
+    st.markdown("이제 별도의 명령어 대신, **왼쪽 사이드바의 [복사용] 궁극의 사골 프롬프트 v11.5**를 복사해서 붙여넣으세요.")
+    st.info("💡 v11.5는 '스마트 감지' 기능이 탑재되어, 신규/기존 프로젝트를 스스로 판단합니다.")
     st.markdown('</div>', unsafe_allow_html=True)
 
 col_left, col_mid, col_right = st.columns([1, 1.5, 1.5])
@@ -946,7 +941,7 @@ with col_left:
             # --- 3-Agent Prompt (Lightweight) ---
             if "3-Agent" in mode:
                 prompt = f"""
-                [Project: Antigravity v11.4 | Role: Research Efficiency Expert]
+                [Project: Antigravity v11.5 | Role: Research Efficiency Expert]
                 You are managing a lean 3-agent team (Researcher, Critic, Writer).
                 Transform the user's input into a concise, fact-focused research brief.
 
@@ -974,7 +969,7 @@ with col_left:
             # --- 5-Agent Prompt (Heavyweight) ---
             else:
                 prompt = f"""
-                [Project: Antigravity v11.4 | Role: Chief Strategy Architect]
+                [Project: Antigravity v11.5 | Role: Chief Strategy Architect]
                 You are the "Brain" of an autonomous 5-agent AI team (Researcher, Analyst, Skeptic, Strategist, Writer).
                 Your mission is to transform the user's raw, vague input into a **Battle-Ready Strategic Work Order**.
                 
