@@ -134,7 +134,9 @@
 3. **Next Model Recommendation (다음 모델 추천)**
    - Tier: SS(Oracle) | S(Deep) | A(Pro) | B(Flash)
    - Model: 구체적 모델명 (예: Claude Opus 4.5, Gemini 3 Pro)
-   - Mode: Fast | Planning
+   - Mode: **Fast** | **Planning**
+     *   **Planning**: 심층 조사(Deep research), 복잡한 작업(Complex tasks), 협업 작업 시 제안
+     *   **Fast**: 단순 작업(Simple tasks), 직접 실행 및 빠른 완료가 가능할 때 제안
    - Reason: 객관적 공학 근거
    - Next Task: 구체적 지시 사항
 

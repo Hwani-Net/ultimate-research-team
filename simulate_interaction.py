@@ -52,19 +52,38 @@ def run_simulation(project_idea):
     
     print("\n🎯 Running Kill Switch Protocol...")
     kill_result = kill_switch_crew.kickoff()
-    kill_decision = str(kill_result)
     
-    print("\n✅ [KILL SWITCH RESULT]")
-    print("=" * 30)
-    print(kill_decision[:500])
-    
-    # Check for KILL decision
-    if "KILL SWITCH: KILL" in kill_decision or "🛑" in kill_decision:
-        print("\n❌ [PROJECT TERMINATED]")
-        print("The Kill Switch detected fatal flaws. Project will NOT proceed to Board.")
-        print(f"Full Report:\n{kill_decision}")
-        return
-    
+    # Parse structured output (Handled similarly to app.py)
+    if hasattr(kill_result, 'pydantic'):
+        kill_data = kill_result.pydantic
+    else:
+        # Fallback for manual parsing if pydantic attribute missing
+        import json
+        from models import KillSwitchResult
+        try:
+            kill_data = KillSwitchResult.model_validate_json(kill_result.raw)
+        except:
+            print("⚠️ Failed to parse structured output. Falling back to string check.")
+            kill_decision = str(kill_result)
+            if "KILL" in kill_decision.upper():
+                print(f"\n❌ [PROJECT TERMINATED]\nReason: String match 'KILL'\n{kill_decision}")
+                return
+            kill_data = None
+
+    if kill_data:
+        print("\n✅ [KILL SWITCH RESULT - STRUCTURED]")
+        print("=" * 40)
+        print(f"Decision: {kill_data.decision}")
+        if kill_data.gate_failed:
+            print(f"Gate Failed: #{kill_data.gate_failed} - {kill_data.gate_name}")
+        print(f"Reason: {kill_data.reason}")
+        print(f"Evidence: {kill_data.evidence or 'N/A'}")
+        
+        if kill_data.decision == "KILL":
+            print("\n❌ [PROJECT TERMINATED]")
+            print("The Kill Switch detected fatal flaws. Project will NOT proceed to Board.")
+            return
+
     print("\n✅ Kill Switch: PASS. Proceeding to Board Meeting...")
     
     # === PHASE 1: BOARD STRATEGY SESSION ===
@@ -178,5 +197,5 @@ def run_simulation(project_idea):
     print("\n🎉 [SIMULATION COMPLETE] Interaction verified successfully.")
 
 if __name__ == "__main__":
-    # Test with a DANGEROUS project that should trigger Kill Switch
-    run_simulation("Notion AI+ - Enhanced Productivity with AI")
+    # Test with EXACT trademark match to trigger Gate 2
+    run_simulation("Notion")
