@@ -933,21 +933,59 @@ with st.sidebar:
         
         ultimate_prompt = """/load_persona
 
-[SYSTEM: ANTIGRAVITY SMART BOOTSTRAP v11.5]
+[SYSTEM: ANTIGRAVITY SMART BOOTSTRAP v11.5.1]
+
+## 🔍 Phase 0: Intent Detection (의도 파악)
+
+AI는 먼저 사용자에게 다음을 물어야 합니다:
+
+**"어떤 방식으로 시작하시겠습니까?"**
+
+1. **[Full Clone]** Ultimate Research Team 전체 시스템을 이 폴더에 복제 (app.py, agents.py, tasks.py, requirements.txt 등 전체 파일)
+2. **[Philosophy Only]** Antigravity 철학만 적용 (agents.py, ANTIGRAVITY_MASTER_MANUAL.md, 작업.md만 생성)
+
+사용자가 선택하기 전까지 **어떤 파일도 생성하지 말 것**.
+
+---
+
+## 📁 Case A: Full Clone (완전 복제)
+
+사용자가 **[Full Clone]**을 선택한 경우:
+
+1. **GitHub Repository Clone**:
+   - `git clone https://github.com/Hwani-Net/ultimate-research-team.git .`
+   - 실패 시: "GitHub 저장소 클론 실패. 수동으로 다운로드하거나 다른 방법을 시도하세요."
+
+2. **Environment Setup**:
+   - OS 감지 (Windows: `setup.ps1` / macOS/Linux: `setup.sh`)
+   - 해당 스크립트 자동 실행
+   - `.env` 파일 생성 가이드
+
+3. **Verification**:
+   - `app.py`, `agents.py`, `tasks.py`, `requirements.txt` 존재 확인
+   - "✅ Ultimate Research Team 설치 완료. `streamlit run app.py`로 실행하세요."
+
+---
+
+## 🧠 Case B: Philosophy Only (철학만)
+
+사용자가 **[Philosophy Only]**를 선택한 경우:
 
 1. **Context Scan (상황 인식)**:
    - 현재 폴더를 스캔하여 `ANTIGRAVITY_MASTER_MANUAL.md`와 `agents.py` 존재 여부를 확인하라.
-   - **Case A (New Project)**: 파일이 없다면 [Priority 1: Local] -> [Priority 2: GitHub OTA] 순서로 즉시 동기화(설치)하라.
-   - **Case B (Existing Project)**: 파일이 이미 존재하면 **다운로드를 생략**하고 즉시 로드하라. (단, 파일이 손상되었거나 사용자가 강제 업데이트를 요청한 경우 제외)
+   - **Case B1 (New Project)**: 파일이 없다면 [Priority 1: Parent Folder] -> [Priority 2: GitHub OTA] 순서로 즉시 동기화하라.
+   - **Case B2 (Existing Project)**: 파일이 이미 존재하면 **다운로드를 생략**하고 즉시 로드하라.
 
 2. **State Recovery (작업 복원)**:
    - 폴더 내에 `blueprint.md`, `작업.md`, 또는 `.git` 폴더가 있는지 확인하라.
-   - **발견 시**: [Ultimate Soulless Mode]를 'Resume State'로 가동하고, "지난 작업 내역(Blueprint/Task)을 감지했습니다. 이어서 진행할까요?"라고 보고하라.
+   - **발견 시**: [Ultimate Soulless Mode]를 'Resume State'로 가동하고, "지난 작업 내역을 감지했습니다. 이어서 진행할까요?"라고 보고하라.
    - **미발견 시**: 신규 프로젝트로 간주하고 `작업.md`를 생성 후 "승인 대기" 상태로 돌입하라.
 
 3. **Execution Protocol**:
    - 매뉴얼 로드 후 즉시 [Radical Transparency]와 [Model Real-Name Policy]를 적용하라.
    - 불필요한 인사치레를 생략하고 즉시 업무 상태(Ready)를 보고하라.
+
+---
 
 ## 🔍 고급 모드 (Hidden Arsenal Active)
 - **그림자 테스트**: 임시 파일 검증 후 흔적 삭제 (Clean Cleanup)
